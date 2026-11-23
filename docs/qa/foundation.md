@@ -1,50 +1,74 @@
 # QA Fondasi No Mouse
 
-Tanggal: 23 November 2026. Branch: `development`.
+Pembaruan: 23 November 2026. Branch: `development`. Source fondasi: `c472014`; snapshot CI terbaru yang diperiksa: `21b10d9`.
 
 ## Kesimpulan
 
-**Belum lulus QA fondasi menyeluruh dan belum memenuhi QA rilis produk. Jangan merge ke `master`.** Kode dasar mobile/Windows dan workflow tersedia, tetapi Android, Windows, iOS, dan CI remote masih memiliki pemeriksaan yang terblokir/belum berjalan.
+**CI tiga platform lulus. Build dan startup WPF lokal lulus. Build APK lokal masih gagal karena timeout unduhan artefak Flutter dari `storage.googleapis.com`. QA perangkat mobile nyata dan QA rilis produk belum dilakukan; jangan merge ke `master`.**
 
-## Bukti aktual
+Fitur remote belum dibuat. Kelulusan fondasi tidak berarti pairing, keamanan sesi, kontrol OS, atau seluruh kebutuhan PRD sudah diuji.
+
+## Bukti CI remote
+
+Diperiksa melalui GitHub Actions API, termasuk status setiap job dan step. Tidak hanya mengandalkan status commit atau YAML yang valid.
+
+| Run | Commit | Status |
+|---|---|---|
+| [45129526212](https://github.com/NunoRifa/no-mouse/actions/runs/45129526212) | `c472014d04a40d28436b02c9a7330ae69cb5788f` | Completed / success |
+| [45132269694](https://github.com/NunoRifa/no-mouse/actions/runs/45132269694) | `21b10d9e1dfd7f097313c8e5690555882601c983` | Completed / success; seluruh job/step diperiksa |
+
+Pada run `45132269694`:
+
+- **Android and Flutter checks:** format, analisis, tes, dan build APK debug berhasil.
+- **Windows build:** SDK setup, restore, format check, serta build Release berhasil.
+- **iOS Simulator build:** Xcode version check, Flutter setup, dependency restore, dan build simulator tanpa signing berhasil pada runner macOS.
+
+Run tersebut membuktikan kompatibilitas toolchain pada image runner yang dipakai. Versi Xcode tepat tidak dikutip karena isi log versi belum dibaca; jangan mengasumsikan semua versi Xcode didukung. Build simulator bukan runtime iPhone, signing, atau QA LAN.
+
+## Bukti lokal
 
 | Pemeriksaan | Hasil | Bukti / batas |
 |---|---|---|
-| Flutter widget RED | Teramati | Dua tes gagal pada demo bawaan karena halaman kosong produk belum tersedia |
-| Flutter widget GREEN | Lulus 2/2 | `flutter test --no-pub`: empty state jujur; viewport 320×640 dengan teks 2x tanpa exception |
-| Format Dart | Lulus | `dart format --output=none --set-exit-if-changed lib test`: 2 files, 0 changed |
-| Analisis Flutter | Lulus | `flutter analyze --no-pub`: No issues found |
-| Build Android debug | Gagal, blocker lingkungan | Unduh `kotlin-compiler-embeddable-2.2.21.jar` gagal: `No such host is known (repo.maven.apache.org)` |
-| Percobaan Android paralel | Gagal, konflik build | Timeout `buildLogic.lock` karena build pertama masih aktif; tidak menghapus lock atau menghentikan proses sembarang |
-| Lisensi Android | Perlu keputusan pengguna | `flutter doctor -v` menyatakan beberapa lisensi belum diterima; tidak menerima ketentuan legal atas nama pengguna |
-| .NET 10.0.404 | Instalasi terblokir | Unduhan resmi terputus `WinError 10054`; resume timeout. Arsip parsial belum diekstrak/dijalankan; checksum wajib diverifikasi sebelum dipakai |
-| WPF XML / csproj / global.json | Lulus pemeriksaan sintaks | XML dan JSON dapat diparse; bukan bukti kompilasi WPF |
-| Build/format/runtime WPF | Belum dijalankan | SDK terpasang hanya 9.0.313, proyek sengaja tetap menargetkan .NET 10 |
-| YAML workflow dan pubspec | Lulus parse | Parser YAML bawaan dependensi `flutter_tools` dipakai tanpa menambah dependency aplikasi |
-| Validasi actionlint | Tidak dijalankan | Instalasi validator eksternal tidak diizinkan; tidak mengakali pembatasan. Parse YAML bukan validasi penuh Actions |
-| Review independen | Satu temuan penting diperbaiki | Checkout Flutter SHA dangkal tidak memiliki tag versi; tambahkan fetch tag 3.47.5 dan verifikasi SHA |
-| Regresi tag Flutter | RED lalu GREEN | Repository sementara tanpa tag membuktikan masalah; fetch tag tepat memulihkan `3.47.5` pada SHA terkunci |
-| Commit/push development | Eksekusi diizinkan pengguna | Penolakan awal terkait sumber Flutter sudah dijawab dengan izin eksplisit pengguna untuk revision terkunci `6a19cca56475dbfba1478ee68d7bd0c2ef891da1`. Commit/push dilanjutkan pada `development`; hasil Git dan CI harus diverifikasi terpisah |
-| CI GitHub | Belum diverifikasi | Workflow baru belum dipush/dijalankan; jangan mengklaim hijau |
-| Build iOS Simulator | Belum dijalankan | Tidak ada Mac lokal; job macOS CI belum terbukti |
-| Runtime Android/iPhone dan LAN | Belum dijalankan | Hanya iPhone tersedia; belum ada signing/pemasangan iOS atau fitur remote |
+| Flutter widget RED | Teramati pada tahap awal | Dua tes gagal pada demo bawaan sebelum halaman kosong produk dibuat |
+| Flutter widget GREEN | Lulus 2/2 pada fondasi | `flutter test --no-pub`: empty state jujur; viewport 320×640 dengan teks 2x tanpa exception; CI snapshot sama juga lulus |
+| Format Dart / analisis Flutter | Lulus pada fondasi dan CI | Format 2 files, 0 changed; `flutter analyze --no-pub`: No issues found |
+| Lisensi Android | Selesai dan dikonfirmasi toolchain | Pengguna menjalankan `flutter doctor --android-licenses`; pemeriksaan ulang `flutter doctor -v` menampilkan Android toolchain bertanda lulus, build-tools 36.0.0, dan `All Android licenses accepted.` Pemeriksaan doctor keseluruhan belum dijadikan bukti lulus semua platform |
+| Build Android debug lokal | Gagal, blocker jaringan | `flutter build apk --debug --no-pub` gagal di `:app:mergeDebugAssets`: empat artefak engine `io.flutter` dari `storage.googleapis.com/download.flutter.io` mengalami `Read timed out`, termasuk retry bawaan Flutter. Pemeriksaan URL POM embedding memakai curl juga timeout setelah 25 detik tanpa data. Build-tools 36.0.0 berhasil dipasang; bukan kegagalan lisensi |
+| SDK .NET 10.0.404 | Terpasang dan diverifikasi | Arsip resmi lengkap diverifikasi SHA-512 sebelum ekstraksi ke `%USERPROFILE%\.dotnet\no-mouse-10.0.404`; `dotnet --version` menghasilkan `10.0.404` |
+| Restore WPF | Lulus | `dotnet restore apps/windows/NoMouse.Windows.csproj` menggunakan SDK lokal terkunci |
+| Format WPF | Lulus | `dotnet format apps/windows/NoMouse.Windows.csproj --verify-no-changes --no-restore` exit 0 |
+| Build WPF Release | Lulus | `dotnet build apps/windows/NoMouse.Windows.csproj --configuration Release --no-restore`: 0 warnings, 0 errors |
+| Runtime WPF | Lulus pemeriksaan UI dasar | Aplikasi asli dijalankan memakai dotnet lokal; UI Automation menemukan `No Mouse`, `Belum ada sesi aktif.`, dan `Pairing belum tersedia pada versi fondasi.`; jendela ditutup melalui WindowPattern |
+| YAML / XML / JSON | Lulus parse pada fondasi | Parser YAML bawaan `flutter_tools`, XML WPF/csproj, dan global.json; bukan pengganti CI |
+| Review independen | Temuan penting diperbaiki sebelum push | Metadata tag Flutter pada checkout dangkal diperbaiki dengan fetch tag tepat dan verifikasi SHA; reproduksi RED/GREEN pada repository sementara |
+| Runtime Android/iPhone dan LAN | Belum dilakukan | Belum ada signing/pemasangan iOS atau fitur remote; tidak diklaim lulus |
+
+Checksum SDK yang terverifikasi:
+
+```text
+330ddd2665b43cd2e428216a0d8ea1ac7bb19b5434fdc530e62010dc3b52823a620bf95489d628e1ed6f5122401793ee4887cca4a019122361a1231497f632ee
+```
+
+SDK ditempatkan di folder pengguna, bukan repository, dan PATH mesin tidak diubah. Gunakan PATH sesi atau path dotnet lokal seperti dijelaskan README. Inisialisasi pertama SDK menampilkan pembuatan sertifikat pengembangan HTTPS; sertifikat tidak di-trust manual dan tidak diperlukan oleh aplikasi fondasi ini.
+
+### Diagnosis yang sudah selesai
+
+- Build Android awal gagal DNS Maven ketika mengunduh `kotlin-compiler-embeddable-2.2.21.jar`. Percobaan paralel kemudian timeout pada lock milik build pertama; tidak menghapus lock atau mematikan proses sembarang. Pemeriksaan lokal terbaru menerima HTTP 200 untuk URL JAR Maven yang sebelumnya gagal dan metadata repository Android Google. Ini membuktikan keterjangkauan endpoint saat diperiksa, bukan kelulusan build; hasil build lokal tetap dicatat terpisah.
+- Unduhan .NET sebelumnya terputus/reset/timeout. Resume kini selesai dan checksum cocok; tidak menurunkan target ke .NET 9.
+- `WaitForInputIdle` pada host `dotnet.exe` sempat gagal karena host tersebut bukan indikator GUI yang andal. Proses yang sama kemudian terbukti memiliki jendela `No Mouse`; pemeriksaan UI Automation dan penutupan jendela berhasil. Tidak mengubah kode aplikasi untuk menyembunyikan masalah alat uji.
+- Instalasi actionlint eksternal tidak diizinkan saat tahap fondasi; tidak diakali. YAML diparse dengan dependency yang sudah ada dan workflow kini terbukti berjalan di GitHub.
+
+## Git dan izin
+
+- Fondasi `c472014` dan TODO awal `21b10d9` telah dipush ke `origin/development`.
+- Pengguna mengizinkan CI menjalankan sumber Flutter pada revision terkunci `6a19cca56475dbfba1478ee68d7bd0c2ef891da1`.
+- `master` tetap branch rilis stabil; tidak di-merge. Aturan permanen ada di `CLAUDE.md`.
+- Pembelian layanan, signing/store, dan perubahan scope tetap membutuhkan persetujuan terpisah.
 
 ## Tindak lanjut
 
-1. Pulihkan akses DNS/jaringan Maven, periksa dan putuskan lisensi Android melalui `flutter doctor --android-licenses`, lalu jalankan ulang build Android tanpa build paralel.
-2. Lengkapi unduhan SDK .NET 10.0.404 dari sumber resmi, verifikasi SHA-512 terhadap metadata, lalu jalankan restore, format, build Release, dan startup Windows.
-3. Setelah push `development`, periksa ketiga job CI. Jangan menganggap pengiriman commit sama dengan workflow berhasil.
-4. Siapkan akses Mac sementara atau signing/TestFlight dengan persetujuan terpisah sebelum QA iPhone nyata.
-5. Setelah fitur produk selesai, jalankan seluruh gate rilis dalam PRD. Keberhasilan fondasi bukan izin merge rilis.
-
-## Keputusan dan batas verifikasi
-
-- Workspace tetap checkout utama pada branch `development` sesuai instruksi pengguna. Sesi paralel harus berkoordinasi; tidak bekerja pada `master`.
-- Instruksi terbaru mengizinkan commit/push `development`, menggantikan larangan awal rencana. `master` tidak di-merge.
-- Default remote diverifikasi sebagai `master`; CI dipicu push/pull request pada `development` dan `master`.
-- Index/arsip Flutter resmi yang dicoba mengembalikan HTTP 404, sedangkan tag Git 3.47.5 cocok dengan SDK lokal. CI menggunakan source SHA terkunci dan fetch tag tepat, dengan verifikasi identitas. Unduhan engine/kompatibilitas runner tetap harus dibuktikan lewat CI.
-- WPF minimal ditulis langsung memakai format SDK standar karena unduhan .NET belum selesai. Tidak ada abstraksi/logika tambahan untuk sekadar memenuhi tes; kompilasi masih harus dibuktikan.
-
-## Temuan minor
-
-Reviewer menunjukkan tautan laporan QA belum tersedia saat review; dokumen ini merupakan hasil QA yang memang diminta rencana dan melengkapi tautan tersebut. Tidak ada minor lain yang dilaporkan.
+1. Pulihkan akses lokal ke `storage.googleapis.com/download.flutter.io` melalui diagnosis koneksi/proxy yang disetujui pengguna, lalu ulangi build APK satu proses. Jangan mengganti mirror sembarang, menonaktifkan TLS, atau mengklaim CI hijau menyelesaikan blocker lokal. Ada peringatan SDK XML versi 3/4 pada log; evaluasi keselarasan command-line tools bila masih muncul setelah jaringan pulih, tanpa menganggapnya penyebab timeout.
+2. Perbarui TODO berdasarkan bukti di atas; commit/push hanya `development`.
+3. Siapkan akses Mac sementara atau jalur signing/TestFlight dengan persetujuan terpisah sebelum QA iPhone nyata.
+4. Tutup keputusan produk dan implementasikan fitur melalui tahap berikutnya; tidak menyatakan produk selesai berdasarkan CI fondasi.
+5. Setelah fitur lengkap, jalankan seluruh gate QA rilis PRD sebelum merge `master`.

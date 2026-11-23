@@ -22,7 +22,7 @@ Pembaruan: 23 November 2026. Snapshot implementasi: `c472014` pada branch `devel
 - [x] Branch `development` dibuat dan melacak `origin/development`; fondasi dipush melalui commit `c472014`.
 - [x] Aturan commit/push dan gate merge `master` dicatat di `CLAUDE.md`.
 - [x] README memuat toolchain, perintah pengembangan, keterbatasan, dan jalur uji iOS.
-- [x] Laporan QA fondasi mencatat hasil uji serta blocker. Beberapa status laporan masih snapshot sebelum push; hasil Git terbaru dicatat pada TODO ini.
+- [x] Laporan QA fondasi diperbarui dengan bukti CI remote `21b10d9`, SDK .NET terpasang, build dan runtime WPF, serta batas uji perangkat nyata.
 
 ### Proyek dasar
 
@@ -34,7 +34,7 @@ Pembaruan: 23 November 2026. Snapshot implementasi: `c472014` pada branch `devel
 - [x] Konfigurasi versi: Flutter 3.47.5, Dart bawaannya 3.13.4, SDK .NET 10.0.404 pada `global.json`, serta `pubspec.lock`.
 - [x] `.gitignore` mengecualikan konfigurasi lokal, rahasia/signing, cache, dan hasil build; `.editorconfig` tersedia.
 
-### Konfigurasi CI — belum berarti run lulus
+### Konfigurasi CI — tiga job terverifikasi lulus
 
 - [x] `.github/workflows/ci.yml` berisi job Linux untuk Flutter/Android, Windows untuk WPF, dan macOS untuk iOS Simulator tanpa signing.
 - [x] Trigger untuk push dan pull request pada `development`/`master`; izin minimum, timeout, concurrency, tanpa signing/deployment.
@@ -44,15 +44,15 @@ Pembaruan: 23 November 2026. Snapshot implementasi: `c472014` pada branch `devel
 
 ## 2. Prioritas sekarang: tuntaskan verifikasi fondasi
 
-- [ ] Periksa run GitHub Actions untuk commit `c472014`: status ketiga job, log, dan kompatibilitas runner/Xcode. **Belum diverifikasi**, jangan diasumsikan gagal maupun berhasil.
-- [ ] Pulihkan akses DNS/jaringan Maven untuk unduhan dependensi Android. Build terakhir gagal mengunduh `kotlin-compiler-embeddable-2.2.21.jar` dari `repo.maven.apache.org`.
-- [ ] Pengguna membaca dan memutuskan lisensi Android melalui `flutter doctor --android-licenses`; tidak diterima otomatis atas nama pengguna.
-- [ ] Jalankan ulang build APK debug tanpa build Gradle paralel; catat hasil.
-- [ ] Lengkapi instalasi SDK .NET 10.0.404. Unduhan sebelumnya terputus/reset/timeout; jangan mengekstrak atau menjalankan arsip parsial tanpa checksum valid.
-- [ ] Jalankan restore, format check, dan build WPF Release menggunakan SDK terkunci. Percobaan build terakhir terblokir SDK yang belum tersedia; tidak fallback ke .NET 9.
-- [ ] Jalankan aplikasi WPF dan periksa startup serta status kosong.
-- [ ] Buktikan build iOS Simulator pada macOS CI. Tidak ada Mac lokal; build ini bukan QA iPhone.
-- [ ] Perbarui laporan QA dengan hasil Git/CI/build terbaru dan tautan run yang benar.
+- [x] Periksa CI `c472014` dan `21b10d9`: keduanya success. [Run 45132269694](https://github.com/NunoRifa/no-mouse/actions/runs/45132269694) diverifikasi per job/step: Android, Windows, iOS Simulator lulus. Versi tepat Xcode tidak dikutip tanpa membaca log; kompatibilitas hanya dibuktikan untuk runner yang dipakai.
+- [x] Endpoint Maven yang sebelumnya gagal kembali HTTP 200; build lokal melewati kendala Kotlin sebelumnya. Blocker unduhan berikutnya ada pada `storage.googleapis.com`, bukan lisensi/Maven.
+- [x] Lisensi Android diterima sendiri oleh pengguna: output `All SDK package licenses accepted.`
+- [ ] Selesaikan build APK debug lokal: percobaan terbaru gagal `:app:mergeDebugAssets` karena artefak engine Flutter dari `storage.googleapis.com` mengalami `Read timed out`. Pemeriksaan URL terpisah juga timeout 25 detik tanpa data. Pulihkan akses endpoint resmi, lalu ulangi; CI Android tetap lulus.
+- [x] SDK .NET 10.0.404 terpasang lokal setelah SHA-512 arsip resmi cocok; PATH mesin tidak diubah.
+- [x] Restore, format check, build WPF Release lokal lulus: 0 warning, 0 error; SDK tetap .NET 10 sesuai `global.json`.
+- [x] Aplikasi WPF asli dibuka, ketiga teks status diverifikasi melalui UI Automation, lalu jendela ditutup.
+- [x] Build iOS Simulator tanpa signing lulus di macOS CI. **Bukan QA runtime iPhone.**
+- [x] Laporan [QA fondasi](docs/qa/foundation.md) diperbarui dengan tautan run, hasil lokal, serta blocker Android `storage.googleapis.com`. Poin 2 belum selesai seluruhnya sampai APK lokal berhasil dibangun.
 
 ## 3. Keputusan produk yang perlu ditutup
 
