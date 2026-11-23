@@ -1,0 +1,15 @@
+<Window x:Class="NoMouse.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="No Mouse"
+        Width="520" Height="300" MinWidth="320" MinHeight="220">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="24">
+            <TextBlock Text="No Mouse" FontSize="24" Margin="0,0,0,24" />
+            <TextBlock Text="Belum ada sesi aktif." TextWrapping="Wrap" />
+            <TextBlock Text="Pairing belum tersedia pada versi fondasi."
+                       TextWrapping="Wrap" Margin="0,8,0,0" />
+        </StackPanel>
+    </ScrollViewer>
+</Window>

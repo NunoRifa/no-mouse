@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [development, master]
+  pull_request:
+    branches: [development, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  mobile:
+    name: Android and Flutter checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      # Source install avoids relying on a mutable Flutter archive index.
+      - name: Check out Flutter 3.47.5
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: flutter/flutter
+          ref: 6a19cca56475dbfba1478ee68d7bd0c2ef891da1
+          path: .ci/flutter
+          persist-credentials: false
+      - name: Configure Flutter
+        working-directory: .ci/flutter
+        run: |
+          git fetch --depth=1 origin refs/tags/3.47.5:refs/tags/3.47.5
+          test "$(git rev-parse 'refs/tags/3.47.5^{commit}')" = "6a19cca56475dbfba1478ee68d7bd0c2ef891da1"
+          test "$(git rev-parse HEAD)" = "6a19cca56475dbfba1478ee68d7bd0c2ef891da1"
+          git checkout -B stable
+          echo "$GITHUB_WORKSPACE/.ci/flutter/bin" >> "$GITHUB_PATH"
+      - run: flutter --version
+      - run: flutter pub get --enforce-lockfile
+      - run: dart format --output=none --set-exit-if-changed lib test
+      - run: flutter analyze --no-pub
+      - run: flutter test --no-pub
+      - run: flutter build apk --debug --no-pub
+
+  windows:
+    name: Windows build
+    runs-on: windows-2025
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
+        with:
+          global-json-file: global.json
+      - run: dotnet restore apps/windows/NoMouse.Windows.csproj
+      - run: dotnet format apps/windows/NoMouse.Windows.csproj --verify-no-changes --no-restore
+      - run: dotnet build apps/windows/NoMouse.Windows.csproj --configuration Release --no-restore
+
+  ios:
+    name: iOS Simulator build (not physical iPhone QA)
+    runs-on: macos-15
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check out Flutter 3.47.5
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: flutter/flutter
+          ref: 6a19cca56475dbfba1478ee68d7bd0c2ef891da1
+          path: .ci/flutter
+          persist-credentials: false
+      - name: Configure Flutter
+        working-directory: .ci/flutter
+        run: |
+          git fetch --depth=1 origin refs/tags/3.47.5:refs/tags/3.47.5
+          test "$(git rev-parse 'refs/tags/3.47.5^{commit}')" = "6a19cca56475dbfba1478ee68d7bd0c2ef891da1"
+          test "$(git rev-parse HEAD)" = "6a19cca56475dbfba1478ee68d7bd0c2ef891da1"
+          git checkout -B stable
+          echo "$GITHUB_WORKSPACE/.ci/flutter/bin" >> "$GITHUB_PATH"
+      - run: xcodebuild -version
+      - run: flutter --version
+      - run: flutter pub get --enforce-lockfile
+      - run: flutter build ios --simulator --debug --no-codesign --no-pub

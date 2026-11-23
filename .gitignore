@@ -1,0 +1,36 @@
+# Local agent/editor state
+.claude/
+.superpowers/
+.worktrees/
+.vs/
+.idea/
+*.iml
+
+# Build outputs
+**/bin/
+**/obj/
+**/build/
+**/.dart_tool/
+**/.gradle/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+**/local.properties
+**/key.properties
+*.user
+*.suo
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.mobileprovision
+*.provisionprofile
+*.cer
+*.pem
+*.key
+
+# OS noise
+.DS_Store
+Thumbs.db
