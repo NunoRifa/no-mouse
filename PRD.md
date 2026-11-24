@@ -470,6 +470,7 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 
 - Keputusan pengguna 25 November 2026: rilis pertama hanya mendukung **Windows 11 x64**; Windows 10 dan Windows ARM ditunda. Versi fitur/build Windows 11 yang didukung masih perlu ditetapkan melalui uji API, lock screen, dan dukungan keamanan OS; jangan mengklaim semua build Windows 11 otomatis didukung.
 - Versi minimum Android/iOS: **TBD — validasi API, perangkat uji, pasar sasaran, dan kebijakan store**.
+- Perangkat uji iOS tersedia menurut laporan pengguna 25 November 2026: **iPhone XS dengan iOS 18.7.11** dan **iPhone 13 dengan iOS 26.1**. Ini inventaris perangkat, bukan bukti pengujian No Mouse atau keputusan minimum iOS. Catat ulang versi aktual saat uji; akses signing/pemasangan tetap perlu disiapkan.
 - Usulan browser awal: versi stabil Chrome dan Edge pada baseline Windows, diuji dengan situs Netflix dan YouTube yang tersedia saat pengujian.
 - Aplikasi media native dan peluncur aplikasi tambahan: **TBD — inventaris aplikasi pengguna lalu uji kompatibilitas**. Batas kompatibilitas harus ditulis, bukan klaim bekerja di semua aplikasi.
 - Satu sesi pengguna Windows yang sudah login, termasuk mempertahankan sesi remote dan membuka kembali lock screen dengan kredensial manual sesuai FR-03. Login pertama setelah boot tetap di luar MVP. Tidak menjanjikan dukungan Windows Server/RDP/multi-user.
