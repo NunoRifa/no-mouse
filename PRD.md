@@ -196,7 +196,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 - Windows menampilkan perangkat terhubung dan menyediakan **Putuskan Sesi** serta **Cabut Akses**. Putus sesi tidak sama dengan cabut kepercayaan.
 - Mouse/keyboard fisik tetap bekerja. Jika pengguna lokal mengambil alih, tindakan lokal harus dapat menghentikan remote; aplikasi tidak menjanjikan koordinasi sempurna penggunaan simultan.
 - Keputusan pengguna 25 November 2026: saat HP dikunci atau aplikasi No Mouse masuk background, sesi diakhiri tetapi kepercayaan perangkat tetap tersimpan. Hentikan input dan tampilan, lepaskan tombol/modifier tertahan, lalu bebaskan slot pengontrol setelah Windows memastikan sesi berakhir. Jika pemberitahuan putus tidak terkirim karena OS menangguhkan aplikasi/jaringan terputus, Windows harus mendeteksi hilangnya sesi melalui timeout liveness yang dibatasi; durasi final perlu divalidasi. Kembali ke foreground menawarkan sambung ulang tanpa QR jika kepercayaan masih sah, dan tetap menolak jika HP lain sudah memakai komputer.
-- Usulan ketika Windows terkunci atau berganti pengguna: sesi berhenti. Tidak ada kontrol login, desktop pengguna lain, atau reconnect otomatis ke sesi pengguna lain.
+- Keputusan pengguna 25 November 2026: penguncian Windows tidak mengakhiri sesi yang sudah aktif selama No Mouse masih berjalan di tray pada sesi pengguna Windows tersebut. Pergantian pengguna mengakhiri sesi; jangan memindahkan koneksi atau hak akses ke desktop pengguna lain. Keputusan mempertahankan sesi saat terkunci bukan persetujuan untuk membuka kunci, mengirim input ke layar login, atau menampilkan secure desktop. Perilaku input/tampilan selama terkunci perlu dikonfirmasi; usulan aman: status **Windows terkunci**, input/capture/clipboard/perintah daya ditangguhkan, input tertahan dilepas, tanpa menampilkan frame lama seolah live. Aturan HP background/terkunci tetap mengakhiri sesi.
 - **Penerimaan:** tidak ada sesi tersembunyi, takeover diam-diam, atau input yang terus berjalan setelah sesi dihentikan.
 
 ### FR-04 — Mouse dan dua mode kontrol
@@ -442,7 +442,8 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 | HP kedua mencoba mengontrol | Tampilkan sibuk; tidak ada takeover diam-diam |
 | HP menerima panggilan, terkunci, atau aplikasi ditutup | Hentikan input/layar, lepas modifier, simpan kepercayaan tanpa sesi background tersembunyi |
 | Putus saat drag/Ctrl/Alt ditekan | Lepas semua input saat sesi hilang; tidak ada tombol tertahan |
-| Windows lock/logout/ganti pengguna | Hentikan sesi; tidak mengakses login atau desktop pengguna lain |
+| Windows terkunci | Pertahankan sesi aktif jika aplikasi tetap berjalan di tray pengguna yang sama. Input/tampilan saat terkunci masih menunggu konfirmasi; tidak menjanjikan kontrol login atau bypass OS |
+| Windows logout/ganti pengguna | Akhiri sesi; tidak mengakses desktop pengguna lain atau memindahkan koneksi otomatis |
 | UAC/elevated window | Hormati batas OS; tampilkan tidak dapat dikontrol bila diblokir; tanpa bypass/elevasi otomatis |
 | Resolusi/DPI/monitor berubah | Blokir sentuh langsung hingga gambar dan koordinat cocok |
 | Layar beku/DRM/izin capture gagal | Label kondisi, jangan tampilkan gambar basi sebagai live; tawarkan touchpad jika input masih sah |
