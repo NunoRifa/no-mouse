@@ -421,7 +421,7 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 | `asset/copy-paste-panel.jpg` | Salin ke komputer, salin dari komputer | FR-08 |
 | `asset/keyboard-panel.jpg` | Keyboard sistem HP, area kontrol mouse | FR-04, FR-05 |
 | `asset/key-panel-1.jpg` | Esc/Tab, navigasi, tombol panah, numpad/F1–F12 | FR-05 |
-| `asset/key-panel-2.jpg` | Shift/Ctrl/Windows/Alt dan ikon kontrol jendela | FR-05, FR-07; rincian ikon jendela perlu konfirmasi |
+| `asset/key-panel-2.jpg` | Shift/Ctrl/Windows/Alt; tombol pertama di kanan Alt membuka Task View melalui Win+Tab (dikonfirmasi pengguna 25 November 2026); dua ikon berikutnya belum dipetakan | FR-05, FR-07; fungsi dua ikon paling kanan masih perlu konfirmasi |
 
 **Ambiguitas yang tidak boleh disembunyikan:** screenshot tidak menjelaskan perilaku setiap ikon. Sebelum desain dibekukan, pemilik produk perlu memeragakan ikon yang belum jelas atau memberi nama aksinya. Seluruh ikon harus masuk checklist penerimaan dengan makna yang terkonfirmasi; kelompok fungsi tidak dianggap selesai jika ada ikon wajib yang belum dipetakan.
 
