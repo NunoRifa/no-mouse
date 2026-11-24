@@ -515,6 +515,12 @@ Target berikut perlu dikalibrasi lewat prototipe dan disetujui sebelum menjadi k
 - MVP tidak memerlukan telemetry cloud. Ukur usability lewat studi berizin dan feedback sukarela; angka store boleh dipakai dengan batasnya, bukan dianggap pengguna aktif.
 - Jika analytics ditambahkan kelak, lakukan review persetujuan, data minimum, retensi, serta kebijakan privasi terlebih dahulu.
 
+### 13.5 Kanal distribusi
+
+- Keputusan pengguna 25 November 2026: Android melalui **Google Play**, iOS melalui **App Store**, dan pendamping Windows melalui **GitHub Releases pada repository resmi proyek**. Situs distribusi tersendiri bukan kebutuhan yang ditetapkan.
+- Ini keputusan kanal produk, bukan izin memublikasikan rilis sekarang, membeli akun/sertifikat, mengunggah kredensial, atau mengaktifkan CD. Pengembangan tetap pada `development`; rilis stabil menunggu aplikasi selesai dan QA rilis lulus sesuai `CLAUDE.md`.
+- Keanggotaan developer, biaya, identifier final, signing paket Windows, keaslian unduhan, disclosure komponen berprivilege untuk lock screen, kebijakan privasi, dan kepatuhan store tetap perlu disiapkan serta diverifikasi. Jangan menganggap hosting GitHub Releases menggantikan verifikasi keaslian paket.
+
 ## 14. Milestone hasil dan gate rilis
 
 Tidak ada tanggal yang dijanjikan. Milestone menyatakan hasil pengguna, bukan daftar pekerjaan teknis.
@@ -571,7 +577,7 @@ Pertanyaan berikut tidak membatalkan keputusan discovery. Tidak ada jawaban yang
 | OQ-06 | Satu sesi aktif, batas lock/background, dan monitor pilihan | Validasi skenario rumah; usulan di FR-03/FR-04 | Sebelum desain sesi final |
 | OQ-07 | Target latensi, keterbacaan, stabilitas dan batas teks 100 KB | Uji prototipe pada perangkat fisik, kalibrasi angka bagian 13 | Sebelum gate rilis disahkan |
 | OQ-08 | Bahasa UI dan aksesibilitas remote desktop | Uji Bahasa Indonesia, font besar, TalkBack/VoiceOver; dokumentasikan batas | Sebelum rilis publik |
-| OQ-09 | Kanal distribusi, signing, kebijakan privasi, biaya | Verifikasi aturan platform terbaru dan biaya nyata; jangan diasumsikan gratis | Sebelum pengumuman rilis |
+| OQ-09 | Signing, kebijakan privasi, biaya dan kesiapan kanal | Kanal ditetapkan: Google Play, App Store, GitHub Releases untuk Windows. Verifikasi akun, signing, identifier, aturan platform dan biaya; belum ada izin publikasi/pembelian | Sebelum pengumuman rilis |
 | OQ-10 | Definisi 1.000–10.000 pengguna dan arah monetisasi | Tetapkan metrik serta metode ukur yang menjaga privasi; keputusan iklan/freemium terpisah | Bukan blocker MVP gratis |
 
 ## 17. Definisi selesai dokumen
