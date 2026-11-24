@@ -416,14 +416,14 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 |---|---|---|
 | `asset/action-panel.jpg` | Daftar ikon aplikasi, penanda aplikasi aktif, akses aplikasi | FR-07 |
 | `asset/browser-panel.jpg` | Kembali/maju, zoom, refresh, home, kontrol tab/jendela, shortcut situs | FR-07 |
-| `asset/control-panel-1.jpg` | Play/pause, sebelumnya/berikutnya, volume; ikon daftar kanan atas menampilkan queue, kotak di bawahnya menjalankan stop (dikonfirmasi pengguna 24 November 2026); X merah belum diketahui | FR-07; pengguna mengonfirmasi 25 November 2026: queue ditampilkan di layar komputer melalui aplikasi pemutar, bukan daftar native pada HP. Makna X merah masih perlu konfirmasi; jangan menganggapnya tutup aplikasi tanpa bukti |
+| `asset/control-panel-1.jpg` | Play/pause, sebelumnya/berikutnya, volume; ikon daftar kanan atas menampilkan queue, kotak di bawahnya menjalankan stop (dikonfirmasi pengguna 24 November 2026); X merah belum diketahui | FR-07; pengguna mengonfirmasi 25 November 2026: queue ditampilkan di layar komputer melalui aplikasi pemutar, bukan daftar native pada HP. pengguna menetapkan 25 November 2026: X merah ditunda dari MVP sampai fungsinya terkonfirmasi; pengecualian eksplisit dari cakupan referensi wajib. Jangan menganggapnya tutup aplikasi tanpa bukti |
 | `asset/control-panel-2.jpg` | Matikan, Tidur, Mulai Ulang, Keluar | FR-09 |
 | `asset/copy-paste-panel.jpg` | Salin ke komputer, salin dari komputer | FR-08 |
 | `asset/keyboard-panel.jpg` | Keyboard sistem HP, area kontrol mouse | FR-04, FR-05 |
 | `asset/key-panel-1.jpg` | Esc/Tab, navigasi, tombol panah, numpad/F1–F12 | FR-05 |
 | `asset/key-panel-2.jpg` | Shift/Ctrl/Windows/Alt; tombol pertama di kanan Alt membuka Task View melalui Win+Tab; tombol berikutnya menjalankan Win+D untuk menampilkan/menyembunyikan desktop (dikonfirmasi pengguna 25 November 2026) | FR-05, FR-07; pengguna menetapkan 25 November 2026: tombol paling kanan ditunda, tidak masuk MVP. Fungsinya belum diketahui dan tidak boleh ditebak; pengecualian eksplisit dari cakupan referensi wajib |
 
-**Ambiguitas yang tidak boleh disembunyikan:** screenshot tidak menjelaskan perilaku setiap ikon. Sebelum desain dibekukan, pemilik produk perlu memeragakan ikon yang belum jelas atau memberi nama aksinya. Seluruh ikon harus masuk checklist penerimaan dengan makna yang terkonfirmasi; kelompok fungsi tidak dianggap selesai jika ada ikon wajib yang belum dipetakan.
+**Ambiguitas yang tidak boleh disembunyikan:** screenshot tidak menjelaskan perilaku setiap ikon. Sebelum desain dibekukan, pemilik produk perlu memeragakan ikon yang masih masuk MVP tetapi belum jelas atau memberi nama aksinya. Seluruh ikon wajib harus masuk checklist penerimaan dengan makna terkonfirmasi. Pengecualian scope yang disetujui pengguna 25 November 2026: X merah panel media dan tombol paling kanan `key-panel-2.jpg` ditunda dari MVP. Semua pernyataan cakupan referensi lengkap dan gate penerimaan dalam PRD mengikuti dua pengecualian ini; tombol yang ditunda bukan blocker kelengkapan MVP.
 
 ## 12. Edge case dan perilaku yang diharapkan
 

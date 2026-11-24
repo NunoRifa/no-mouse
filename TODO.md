@@ -59,7 +59,7 @@ Pembaruan: 24 November 2026. Snapshot implementasi: `c472014` pada branch `devel
 Lihat OQ-01–OQ-10 pada PRD untuk alasan dan metode validasi. Berikut belum merupakan keputusan final.
 
 - [ ] Validasi masalah, dua profil pengguna, dan alasan memilih No Mouse dibanding aplikasi sejenis.
-- [ ] Konfirmasi makna seluruh ikon referensi media/jendela; buat checklist aksi agar tidak ada fungsi wajib terlewat.
+- [ ] Lengkapi checklist seluruh aksi referensi wajib. Yang sudah dikonfirmasi: queue tampil melalui pemutar di komputer, stop, Task View (Win+Tab), dan tampil/sembunyikan desktop (Win+D). X merah panel media serta tombol paling kanan `key-panel-2.jpg` ditunda dari MVP atas keputusan pengguna 25 November 2026; tidak perlu ditebak atau menjadi blocker MVP.
 - [ ] Tetapkan versi minimum Android/iOS/Windows dan dukungan arsitektur.
 - [ ] Tetapkan aplikasi media, browser, serta peluncur yang dijamin didukung.
 - [ ] Setujui detail pairing: konfirmasi pasangan baru di Windows, masa berlaku QR, dan pembatasan percobaan.
