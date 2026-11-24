@@ -191,8 +191,8 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 
 ### FR-03 — Siklus sesi dan konflik pengontrol
 
-- Usulan satu HP aktif per komputer dan satu komputer aktif per HP. Beberapa perangkat boleh tersimpan sebagai pasangan.
-- HP kedua menerima status komputer sedang digunakan; tidak mengambil alih diam-diam. Windows dapat memutus sesi aktif sebelum mengizinkan sesi lain.
+- Keputusan pengguna 25 November 2026: hanya satu HP boleh mengontrol komputer pada satu waktu; beberapa HP tetap boleh tersimpan sebagai perangkat tepercaya. Batas satu komputer aktif per HP masih merupakan usulan.
+- Koneksi kontrol HP kedua ditolak dengan status **Komputer sedang digunakan** sampai sesi pertama berakhir, meskipun HP kedua tepercaya. Tidak ada takeover atau pemutusan sesi pertama oleh HP kedua. Pengguna di Windows tetap dapat mengakhiri sesi aktif melalui **Putuskan Sesi**; setelah sesi berakhir, HP lain dapat mencoba menghubungkan kembali.
 - Windows menampilkan perangkat terhubung dan menyediakan **Putuskan Sesi** serta **Cabut Akses**. Putus sesi tidak sama dengan cabut kepercayaan.
 - Mouse/keyboard fisik tetap bekerja. Jika pengguna lokal mengambil alih, tindakan lokal harus dapat menghentikan remote; aplikasi tidak menjanjikan koordinasi sempurna penggunaan simultan.
 - Saat HP masuk background/terkunci, input dihentikan, tombol dilepas, dan tampilan dihentikan. Kepercayaan tetap tersimpan; kembali ke foreground boleh menawarkan sambung ulang.
