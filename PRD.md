@@ -183,7 +183,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 ### FR-02 — Pairing dan perangkat tepercaya
 
 - Pairing baru hanya dimulai melalui tindakan pengguna di Windows, ketika sesi Windows tidak terkunci.
-- Usulan QR berlaku maksimum 120 detik, sekali pakai, dan dibatalkan ketika halaman pairing ditutup. QR tidak boleh membawa kredensial kepercayaan permanen.
+- Keputusan pengguna 25 November 2026: QR berlaku maksimum **2 menit (120 detik) dan sekali pakai**. Masa berlaku dihitung sejak QR diterbitkan, bukan sejak dipindai. Pembatalan ketika halaman pairing ditutup tetap rekomendasi keamanan yang diajukan; jangan menyamakannya dengan keluar/minimize ke tray. QR tidak boleh membawa kredensial kepercayaan permanen.
 - Setelah scan, HP menampilkan nama komputer; Windows menampilkan permintaan pasangan baru beserta identitas yang dapat dicocokkan pada kedua perangkat. Nama HP bukan bukti keamanan.
 - Keputusan pengguna 25 November 2026: Windows meminta persetujuan hanya saat pairing pertama HP yang belum dipercaya. Kepercayaan baru tersimpan setelah konfirmasi di HP dan persetujuan di Windows. Koneksi berikutnya tidak meminta persetujuan ulang selama kepercayaan sah; setelah akses dicabut atau kredensial hilang, perangkat harus pairing dan mendapat persetujuan baru. Pembatalan, batas waktu, atau QR tidak valid tidak boleh menyisakan pasangan aktif.
 - Koneksi berikutnya memerlukan bukti kepercayaan perangkat, tidak perlu persetujuan ulang setiap sesi selama akses masih berlaku.
