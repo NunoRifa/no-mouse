@@ -1,6 +1,6 @@
 # TODO — No Mouse
 
-Pembaruan: 23 November 2026. Snapshot implementasi: `c472014` pada branch `development`, sudah dipush ke `origin/development`.
+Pembaruan: 24 November 2026. Snapshot implementasi: `c472014` pada branch `development`, sudah dipush ke `origin/development`.
 
 **Status: fondasi tersedia, fitur remote belum dibuat, QA menyeluruh belum lulus. Jangan merge ke `master`.**
 
@@ -47,7 +47,7 @@ Pembaruan: 23 November 2026. Snapshot implementasi: `c472014` pada branch `devel
 - [x] Periksa CI `c472014` dan `21b10d9`: keduanya success. [Run 45132269694](https://github.com/NunoRifa/no-mouse/actions/runs/45132269694) diverifikasi per job/step: Android, Windows, iOS Simulator lulus. Versi tepat Xcode tidak dikutip tanpa membaca log; kompatibilitas hanya dibuktikan untuk runner yang dipakai.
 - [x] Endpoint Maven yang sebelumnya gagal kembali HTTP 200; build lokal melewati kendala Kotlin sebelumnya. Blocker unduhan berikutnya ada pada `storage.googleapis.com`, bukan lisensi/Maven.
 - [x] Lisensi Android diterima sendiri oleh pengguna: output `All SDK package licenses accepted.`
-- [ ] Selesaikan build APK debug lokal: percobaan terbaru gagal `:app:mergeDebugAssets` karena artefak engine Flutter dari `storage.googleapis.com` mengalami `Read timed out`. Pemeriksaan URL terpisah juga timeout 25 detik tanpa data. Pulihkan akses endpoint resmi, lalu ulangi; CI Android tetap lulus.
+- [ ] Selesaikan build APK debug lokal: percobaan terbaru gagal `:app:mergeDebugAssets` karena artefak engine Flutter dari `storage.googleapis.com` mengalami `Read timed out`. Diagnosis 24 November: TCP/TLS berhasil tetapi HTTP tidak membalas, termasuk IPv4 eksplisit; tidak ada proxy aktif. Alias yang gagal sertifikat tidak dipakai. Perlu uji jalur koneksi lain/hotspot oleh pengguna sebelum retry build; CI Android tetap lulus.
 - [x] SDK .NET 10.0.404 terpasang lokal setelah SHA-512 arsip resmi cocok; PATH mesin tidak diubah.
 - [x] Restore, format check, build WPF Release lokal lulus: 0 warning, 0 error; SDK tetap .NET 10 sesuai `global.json`.
 - [x] Aplikasi WPF asli dibuka, ketiga teks status diverifikasi melalui UI Automation, lalu jendela ditutup.

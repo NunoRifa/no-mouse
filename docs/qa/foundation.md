@@ -1,6 +1,6 @@
 # QA Fondasi No Mouse
 
-Pembaruan: 23 November 2026. Branch: `development`. Source fondasi: `c472014`; snapshot CI terbaru yang diperiksa: `21b10d9`.
+Pembaruan: 24 November 2026. Branch: `development`. Source fondasi: `c472014`; snapshot CI terbaru yang diperiksa: `21b10d9`.
 
 ## Kesimpulan
 
@@ -57,6 +57,15 @@ SDK ditempatkan di folder pengguna, bukan repository, dan PATH mesin tidak diuba
 - Unduhan .NET sebelumnya terputus/reset/timeout. Resume kini selesai dan checksum cocok; tidak menurunkan target ke .NET 9.
 - `WaitForInputIdle` pada host `dotnet.exe` sempat gagal karena host tersebut bukan indikator GUI yang andal. Proses yang sama kemudian terbukti memiliki jendela `No Mouse`; pemeriksaan UI Automation dan penutupan jendela berhasil. Tidak mengubah kode aplikasi untuk menyembunyikan masalah alat uji.
 - Instalasi actionlint eksternal tidak diizinkan saat tahap fondasi; tidak diakali. YAML diparse dengan dependency yang sudah ada dan workflow kini terbukti berjalan di GitHub.
+
+### Diagnosis jaringan lanjutan — 24 November 2026
+
+- Reproduksi GET dan HEAD pada URL POM engine yang gagal masih timeout 12–20 detik tanpa respons HTTP. `curl -v` menunjukkan resolusi IPv4, koneksi TCP 443, dan negosiasi TLS/ALPN selesai, lalu request terkirim tetapi tidak ada byte respons.
+- Permintaan IPv4 eksplisit (`curl -4`) juga gagal; tidak ada bukti bahwa preferensi IPv6 merupakan akar masalah. Root host Storage juga timeout, sehingga bukan hanya satu artefak hilang.
+- WinHTTP direct, user proxy tidak aktif, PAC tidak dikonfigurasi, dan tidak ada variabel proxy/Flutter storage aktif yang ditemukan. Tidak mengubah proxy, DNS, firewall, atau hosts.
+- Query DNS standar dan query eksplisit ke resolver publik menghasilkan jawaban; alamat berubah antar pemeriksaan. Belum dapat dipastikan apakah masalah berasal dari jalur jaringan, intersepsi, atau layanan upstream; tidak mengklaim penyebab spesifik tanpa bukti.
+- Host alias resmi Storage yang dicoba juga timeout atau gagal verifikasi nama sertifikat (`SEC_E_WRONG_PRINCIPAL`). Alias yang gagal validasi tidak dipakai; TLS tidak dinonaktifkan dan tidak memasang mirror pihak ketiga.
+- Tidak mengulang build panjang karena endpoint prasyarat masih gagal. Untuk menyelesaikan build lokal dibutuhkan jalur internet yang dapat mengakses endpoint resmi, misalnya uji koneksi lain/hotspot yang diaktifkan pengguna. Kelulusan CI tidak diubah menjadi klaim kelulusan build lokal.
 
 ## Git dan izin
 
