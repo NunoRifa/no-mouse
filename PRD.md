@@ -76,7 +76,7 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 
 | Area | Keputusan |
 |---|---|
-| Platform | Android dan iOS mengontrol Windows terlebih dahulu |
+| Platform | Android dan iOS mengontrol **Windows 11 x64 saja** pada rilis pertama; Windows 10 dan Windows ARM ditunda (dikonfirmasi 25 November 2026) |
 | Jaringan | Lokal saja; tidak memerlukan akses kontrol melalui internet |
 | Beda SSID | Harus dapat digunakan jika jaringan saling mengizinkan komunikasi; nama SSID bukan identitas atau bukti kepercayaan |
 | Pairing | QR ditampilkan komputer, dipindai HP |
@@ -466,9 +466,10 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 
 ## 13. Kualitas, kompatibilitas, dan ukuran keberhasilan
 
-### 13.1 Kandidat baseline — belum keputusan pengguna
+### 13.1 Baseline dukungan — keputusan dan hal terbuka
 
-- Usulan komputer minimum: Windows 11 x64 pada versi yang masih menerima dukungan keamanan. Windows 10, Windows ARM, dan versi minimum Android/iOS: **TBD — validasi API, perangkat uji, pasar sasaran, dan kebijakan store**.
+- Keputusan pengguna 25 November 2026: rilis pertama hanya mendukung **Windows 11 x64**; Windows 10 dan Windows ARM ditunda. Versi fitur/build Windows 11 yang didukung masih perlu ditetapkan melalui uji API, lock screen, dan dukungan keamanan OS; jangan mengklaim semua build Windows 11 otomatis didukung.
+- Versi minimum Android/iOS: **TBD — validasi API, perangkat uji, pasar sasaran, dan kebijakan store**.
 - Usulan browser awal: versi stabil Chrome dan Edge pada baseline Windows, diuji dengan situs Netflix dan YouTube yang tersedia saat pengujian.
 - Aplikasi media native dan peluncur aplikasi tambahan: **TBD — inventaris aplikasi pengguna lalu uji kompatibilitas**. Batas kompatibilitas harus ditulis, bukan klaim bekerja di semua aplikasi.
 - Satu sesi pengguna Windows yang sudah login, termasuk mempertahankan sesi remote dan membuka kembali lock screen dengan kredensial manual sesuai FR-03. Login pertama setelah boot tetap di luar MVP. Tidak menjanjikan dukungan Windows Server/RDP/multi-user.

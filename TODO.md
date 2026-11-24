@@ -60,7 +60,7 @@ Lihat OQ-01–OQ-10 pada PRD untuk alasan dan metode validasi. Berikut belum mer
 
 - [ ] Validasi masalah, dua profil pengguna, dan alasan memilih No Mouse dibanding aplikasi sejenis.
 - [ ] Lengkapi checklist seluruh aksi referensi wajib. Yang sudah dikonfirmasi: queue tampil melalui pemutar di komputer, stop, Task View (Win+Tab), dan tampil/sembunyikan desktop (Win+D). X merah panel media serta tombol paling kanan `key-panel-2.jpg` ditunda dari MVP atas keputusan pengguna 25 November 2026; tidak perlu ditebak atau menjadi blocker MVP.
-- [ ] Tetapkan versi minimum Android/iOS/Windows dan dukungan arsitektur.
+- [ ] Lengkapi baseline OS: **Windows 11 x64 saja sudah ditetapkan** untuk rilis pertama (25 November 2026); Windows 10/ARM ditunda. Versi fitur/build Windows 11 serta minimum Android/iOS masih perlu diputuskan dan diuji.
 - [ ] Tetapkan aplikasi media, browser, serta peluncur yang dijamin didukung.
 - [ ] Setujui detail pairing: konfirmasi pasangan baru di Windows, masa berlaku QR, dan pembatasan percobaan.
 - [ ] Lengkapi detail sesi: satu pengontrol (HP kedua ditolak), HP background/terkunci mengakhiri sesi tetapi menyimpan kepercayaan, Windows terkunci mempertahankan sesi, dan pergantian pengguna mengakhiri sesi sudah ditetapkan. **Kontrol lock screen dan input password manual wajib MVP**, meskipun perlu komponen tambahan/instalasi administrator (25 November 2026). Studi kelayakan hak minimum, perilaku reconnect saat terkunci, monitor pilihan, dan timeout liveness belum selesai; tidak ada bypass atau penyimpanan password.
