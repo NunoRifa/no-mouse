@@ -63,7 +63,7 @@ Lihat OQ-01–OQ-10 pada PRD untuk alasan dan metode validasi. Berikut belum mer
 - [ ] Tetapkan versi minimum Android/iOS/Windows dan dukungan arsitektur.
 - [ ] Tetapkan aplikasi media, browser, serta peluncur yang dijamin didukung.
 - [ ] Setujui detail pairing: konfirmasi pasangan baru di Windows, masa berlaku QR, dan pembatasan percobaan.
-- [ ] Setujui detail sesi: konflik pengontrol, lock/background, monitor pilihan, dan perilaku reconnect.
+- [ ] Lengkapi detail sesi: satu pengontrol (HP kedua ditolak), HP background/terkunci mengakhiri sesi tetapi menyimpan kepercayaan, Windows terkunci mempertahankan sesi, dan pergantian pengguna mengakhiri sesi sudah ditetapkan. **Kontrol lock screen dan input password manual wajib MVP**, meskipun perlu komponen tambahan/instalasi administrator (25 November 2026). Studi kelayakan hak minimum, perilaku reconnect saat terkunci, monitor pilihan, dan timeout liveness belum selesai; tidak ada bypass atau penyimpanan password.
 - [ ] Kalibrasi dan setujui target latensi/keterbacaan/stabilitas serta batas clipboard melalui prototipe.
 - [ ] Tetapkan bahasa UI, cakupan aksesibilitas, kanal distribusi, biaya, identifier final, dan kebijakan privasi.
 

@@ -67,7 +67,7 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 ### Bukan sasaran MVP
 
 - Pengguna yang membutuhkan kendali komputer dari luar jaringan lokal.
-- Administrasi enterprise, bantuan teknis ke komputer pihak lain, atau akses sebelum login.
+- Administrasi enterprise, bantuan teknis ke komputer pihak lain, atau login pertama setelah boot sebelum sesi pengguna terbentuk. Membuka kunci sesi pengguna yang sudah aktif termasuk MVP sesuai keputusan 25 November 2026.
 - Gaming kompetitif, produksi kreatif presisi tinggi, serta streaming audio/video komputer berkualitas tinggi.
 
 ## 4. Keputusan, batas, dan prioritas
@@ -107,6 +107,7 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 | Shutdown, sleep, restart, dan logout dengan konfirmasi | Memenuhi referensi sambil mengurangi salah tindakan |
 | Status koneksi, pemulihan, dan pelepasan input tertahan | Mencegah input salah atau tersangkut saat gangguan |
 | Kendali privasi layar dan penanda sesi aktif | Pengguna komputer harus mengetahui dan menghentikan akses |
+| Kontrol lock screen dan input password manual pada sesi Windows yang sudah aktif | Wajib sejak MVP, ditetapkan pengguna 25 November 2026 meskipun memerlukan komponen tambahan dan izin instalasi administrator; autentikasi Windows tidak dilewati |
 
 #### Bagus kalau ada
 
@@ -131,7 +132,7 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 | Transfer file, gambar clipboard, clipboard otomatis | Kebutuhan tervalidasi baru transfer teks eksplisit |
 | Beberapa HP mengontrol komputer bersamaan | Menghindari input bertabrakan; usulan satu pengontrol aktif per komputer |
 | Kendali beberapa komputer sekaligus | Satu komputer aktif per HP; daftar komputer tersimpan tetap dapat tersedia |
-| Wake-on-LAN dan akses sebelum login/UAC | Bukan syarat awal dan bergantung batas OS/perangkat |
+| Wake-on-LAN, login pertama setelah boot, dan kontrol UAC | Di luar MVP. Berbeda dari membuka kunci sesi Windows yang sudah aktif, yang wajib sejak MVP |
 
 Semua kategori fungsi referensi tetap masuk MVP. Tahapan pengerjaan tidak boleh dipakai untuk menyatakan rilis publik lengkap ketika panel wajib masih berupa placeholder.
 
@@ -197,9 +198,9 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 - Mouse/keyboard fisik tetap bekerja. Jika pengguna lokal mengambil alih, tindakan lokal harus dapat menghentikan remote; aplikasi tidak menjanjikan koordinasi sempurna penggunaan simultan.
 - Keputusan pengguna 25 November 2026: saat HP dikunci atau aplikasi No Mouse masuk background, sesi diakhiri tetapi kepercayaan perangkat tetap tersimpan. Hentikan input dan tampilan, lepaskan tombol/modifier tertahan, lalu bebaskan slot pengontrol setelah Windows memastikan sesi berakhir. Jika pemberitahuan putus tidak terkirim karena OS menangguhkan aplikasi/jaringan terputus, Windows harus mendeteksi hilangnya sesi melalui timeout liveness yang dibatasi; durasi final perlu divalidasi. Kembali ke foreground menawarkan sambung ulang tanpa QR jika kepercayaan masih sah, dan tetap menolak jika HP lain sudah memakai komputer.
 - Keputusan pengguna 25 November 2026: penguncian Windows tidak mengakhiri sesi yang sudah aktif selama No Mouse masih berjalan di tray pada sesi pengguna Windows tersebut. HP tetap dapat mengoperasikan lock screen dan memasukkan password secara manual melalui antarmuka autentikasi Windows. Pergantian pengguna mengakhiri sesi; jangan memindahkan koneksi atau hak akses ke desktop pengguna lain. Aturan HP background/terkunci tetap mengakhiri sesi.
-- Status kelayakan kontrol lock screen: **kebutuhan pengguna terkonfirmasi, implementasi dan cakupan MVP belum dibuktikan**. Ini memperluas batas sesi desktop tidak terkunci sebelumnya; entri scope lama yang mengecualikan login belum dapat dianggap keputusan final untuk skenario membuka kunci sesi aktif ini. WPF tray biasa tidak otomatis mempunyai akses ke desktop Winlogon; perlu studi kelayakan integrasi Windows dengan hak minimum dan persetujuan instalasi yang jelas. Tidak menjanjikan bahwa menjalankan tray atau Run as administrator saja mencukupi. Login pertama setelah boot, penggantian pengguna, dan kontrol UAC bukan otomatis bagian kebutuhan ini.
+- Keputusan pengguna 25 November 2026: **kontrol lock screen dan input password manual wajib sejak MVP**, meskipun memerlukan komponen Windows tambahan dan instalasi dengan izin administrator. Persetujuan ini mencakup kebutuhan produk, bukan persetujuan atas desain privilege tertentu atau bukti implementasi berhasil. WPF tray biasa tidak otomatis mempunyai akses ke desktop Winlogon; studi kelayakan integrasi dengan hak minimum dan persetujuan instalasi jelas menjadi blocker sebelum desain keamanan dikunci. Menjalankan tray atau Run as administrator saja tidak dijanjikan mencukupi. Login pertama setelah boot dan kontrol UAC tetap di luar MVP; pergantian pengguna mengakhiri sesi.
 - Batas keamanan kebutuhan lock screen: autentikasi Windows tetap wajib, tidak ada bypass password, penyimpanan/replay password, auto-login, atau log kredensial. Password dimasukkan langsung oleh pengguna; input sensitif tidak diantrikan untuk replay setelah reconnect. Pairing perangkat baru tetap hanya dilakukan saat Windows terbuka. Detail capture lock screen dan kemampuan remote saat terkunci harus diuji pada baseline Windows sebelum klaim dukungan publik.
-- Referensi kelayakan: [Microsoft — Desktops](https://learn.microsoft.com/en-us/windows/win32/winstation/desktops) menjelaskan isolasi desktop serta pembatasan akses Winlogon. Keputusan jalur integrasi dan apakah fitur wajib sejak MVP masih terbuka; jangan mencentang dukungan berdasarkan UI tray saja.
+- Referensi kelayakan: [Microsoft — Desktops](https://learn.microsoft.com/en-us/windows/win32/winstation/desktops) menjelaskan isolasi desktop serta pembatasan akses Winlogon. Jalur integrasi masih terbuka; kewajiban fitur sejak MVP sudah ditetapkan. Jangan mencentang dukungan berdasarkan UI tray saja; rilis MVP harus membuktikan alur lock screen yang disetujui atau meminta perubahan scope secara eksplisit.
 - **Penerimaan:** tidak ada sesi tersembunyi, takeover diam-diam, atau input yang terus berjalan setelah sesi dihentikan.
 
 ### FR-04 — Mouse dan dua mode kontrol
@@ -445,7 +446,7 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 | HP kedua mencoba mengontrol | Tampilkan sibuk; tidak ada takeover diam-diam |
 | HP menerima panggilan, terkunci, atau aplikasi ditutup | Hentikan input/layar, lepas modifier, simpan kepercayaan tanpa sesi background tersembunyi |
 | Putus saat drag/Ctrl/Alt ditekan | Lepas semua input saat sesi hilang; tidak ada tombol tertahan |
-| Windows terkunci | Kebutuhan terkonfirmasi: pertahankan sesi aktif dan izinkan pengguna mengoperasikan lock screen serta memasukkan password Windows sendiri. Kelayakan dan cakupan MVP masih perlu diputuskan; tanpa bypass autentikasi atau penyimpanan kredensial |
+| Windows terkunci | Kebutuhan terkonfirmasi: pertahankan sesi aktif dan izinkan pengguna mengoperasikan lock screen serta memasukkan password Windows sendiri. Wajib sejak MVP; jalur integrasi dan kelayakan belum dibuktikan. Tanpa bypass autentikasi atau penyimpanan kredensial |
 | Windows logout/ganti pengguna | Akhiri sesi; tidak mengakses desktop pengguna lain atau memindahkan koneksi otomatis |
 | UAC/elevated window | Hormati batas OS; tampilkan tidak dapat dikontrol bila diblokir; tanpa bypass/elevasi otomatis |
 | Resolusi/DPI/monitor berubah | Blokir sentuh langsung hingga gambar dan koordinat cocok |
@@ -469,7 +470,7 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 - Usulan komputer minimum: Windows 11 x64 pada versi yang masih menerima dukungan keamanan. Windows 10, Windows ARM, dan versi minimum Android/iOS: **TBD — validasi API, perangkat uji, pasar sasaran, dan kebijakan store**.
 - Usulan browser awal: versi stabil Chrome dan Edge pada baseline Windows, diuji dengan situs Netflix dan YouTube yang tersedia saat pengujian.
 - Aplikasi media native dan peluncur aplikasi tambahan: **TBD — inventaris aplikasi pengguna lalu uji kompatibilitas**. Batas kompatibilitas harus ditulis, bukan klaim bekerja di semua aplikasi.
-- Satu sesi desktop Windows pengguna yang login dan tidak terkunci. Tidak menjanjikan dukungan Windows Server/RDP/multi-user.
+- Satu sesi pengguna Windows yang sudah login, termasuk mempertahankan sesi remote dan membuka kembali lock screen dengan kredensial manual sesuai FR-03. Login pertama setelah boot tetap di luar MVP. Tidak menjanjikan dukungan Windows Server/RDP/multi-user.
 - Minimum keterbacaan dan input harus lulus pada HP Android dan iPhone fisik, bukan emulator saja.
 
 Baseline final adalah blocker rilis. Dokumen ini tidak mengklaim versi OS/API tersebut sudah diteliti atau dukungan store sudah diverifikasi.
