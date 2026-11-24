@@ -99,6 +99,7 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 | Autentikasi, enkripsi, pencabutan, dan penghentian sesi dari Windows | Baseline keamanan; LAN bukan jaringan yang otomatis tepercaya |
 | Mouse lengkap dan dua mode kontrol | Menggantikan tindakan mouse fisik |
 | Tampilan layar dengan kursor | Memastikan sasaran klik dan hasil ketikan |
+| Pilih satu/semua monitor, desktop gabungan, zoom dan geser tampilan | Wajib sesuai keputusan 25 November 2026; mengikuti susunan monitor Windows dan menjaga keterbacaan pada HP |
 | Keyboard, navigasi, F1–F12, numpad, dan kombinasi tombol | Memenuhi referensi dan aktivitas mengetik |
 | Kontrol media/volume | Mendukung kasus hiburan utama |
 | Akses/pindah aplikasi dan tindakan jendela referensi | Memungkinkan navigasi tanpa kembali ke meja |
@@ -113,7 +114,6 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 
 | Fitur | Alasan / batas |
 |---|---|
-| Zoom dan pan layar | Membantu teks kecil; menjadi wajib jika target keterbacaan tidak tercapai tanpa fitur ini |
 | Sensitivitas kursor dan scroll | Menyesuaikan kebiasaan serta ukuran layar |
 | Landscape | Memberi ruang tambahan; koordinat input tetap harus benar saat ukuran tampilan berubah |
 | Getaran dan penanda klik | Memperjelas umpan balik; tidak menjadi satu-satunya penanda |
@@ -211,7 +211,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 - Pergantian mode harus jelas dan melepaskan input tertahan. Area di luar gambar tidak boleh menghasilkan klik desktop.
 - DPI Windows, resolusi, posisi monitor, dan perubahan ukuran viewport tidak boleh menyebabkan salah pemetaan.
 - Jika gambar terlambat, koneksi hilang, atau pemetaan layar berubah, hentikan sentuh langsung sampai tampilan valid. Usulan batas gambar basi: lebih dari 1 detik; validasi lewat uji.
-- Keputusan pengguna 25 November 2026: MVP menyediakan pemilihan satu monitor atau **Semua monitor** untuk ditampilkan/dikontrol. Ini menggantikan usulan pembatasan satu monitor per waktu. Cara menyajikan semua monitor dan cakupan gerak kursor dalam mode satu monitor masih perlu dikonfirmasi. Perubahan pilihan, susunan, jumlah, resolusi, atau DPI monitor harus menyegarkan tampilan serta pemetaan sebelum sentuh langsung diterima. Tidak menganggap semua monitor memiliki ukuran/DPI sama; kapasitas maksimum dan performa perlu divalidasi.
+- Keputusan pengguna 25 November 2026: MVP menyediakan pemilihan satu monitor atau **Semua monitor** untuk ditampilkan/dikontrol. Ini menggantikan usulan pembatasan satu monitor per waktu. Mode **Semua monitor** menampilkan satu desktop gabungan mengikuti susunan layar Windows, dengan zoom dan geser tampilan wajib sejak MVP (dikonfirmasi pengguna 25 November 2026). Cakupan gerak kursor dalam mode satu monitor masih perlu dikonfirmasi. Perubahan pilihan, susunan, jumlah, resolusi, atau DPI monitor harus menyegarkan tampilan serta pemetaan sebelum sentuh langsung diterima. Tidak menganggap semua monitor memiliki ukuran/DPI sama; kapasitas maksimum dan performa perlu divalidasi.
 - **Penerimaan:** koordinat benar pada skala Windows 100%, 125%, 150%, dan 200%, termasuk monitor dengan DPI berbeda. Kontrol tidak mengklik gambar lama setelah reconnect.
 
 ### FR-05 — Keyboard dan tombol tambahan

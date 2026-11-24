@@ -132,4 +132,4 @@ Tidak termasuk pekerjaan aktif sampai scope diubah:
 - Kontrol simultan beberapa HP/komputer dan Wake-on-LAN.
 - Iklan/freemium; evaluasi setelah definisi jumlah pengguna dan keputusan monetisasi disepakati.
 - Tambahan kenyamanan: sensitivitas, landscape yang dipoles, getaran, kustomisasi shortcut, diagnosis mendalam, dan autostart Windows.
-- Zoom/pan merupakan tambahan kecuali dibutuhkan untuk memenuhi kriteria keterbacaan; jika dibutuhkan, perlakukan sebagai wajib.
+- Bukan lagi fitur ditunda: zoom/pan serta pemilihan satu/semua monitor wajib MVP sesuai keputusan 25 November 2026. Mode semua monitor berupa desktop gabungan mengikuti susunan Windows.
