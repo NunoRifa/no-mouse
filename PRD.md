@@ -211,7 +211,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 - Pergantian mode harus jelas dan melepaskan input tertahan. Area di luar gambar tidak boleh menghasilkan klik desktop.
 - DPI Windows, resolusi, posisi monitor, dan perubahan ukuran viewport tidak boleh menyebabkan salah pemetaan.
 - Jika gambar terlambat, koneksi hilang, atau pemetaan layar berubah, hentikan sentuh langsung sampai tampilan valid. Usulan batas gambar basi: lebih dari 1 detik; validasi lewat uji.
-- Usulan multi-monitor: satu monitor ditampilkan/dikontrol per waktu, dengan pemilih monitor bila tersedia beberapa. Perubahan monitor harus menyegarkan pemetaan; streaming beberapa monitor sekaligus di luar MVP.
+- Keputusan pengguna 25 November 2026: MVP menyediakan pemilihan satu monitor atau **Semua monitor** untuk ditampilkan/dikontrol. Ini menggantikan usulan pembatasan satu monitor per waktu. Cara menyajikan semua monitor dan cakupan gerak kursor dalam mode satu monitor masih perlu dikonfirmasi. Perubahan pilihan, susunan, jumlah, resolusi, atau DPI monitor harus menyegarkan tampilan serta pemetaan sebelum sentuh langsung diterima. Tidak menganggap semua monitor memiliki ukuran/DPI sama; kapasitas maksimum dan performa perlu divalidasi.
 - **Penerimaan:** koordinat benar pada skala Windows 100%, 125%, 150%, dan 200%, termasuk monitor dengan DPI berbeda. Kontrol tidak mengklik gambar lama setelah reconnect.
 
 ### FR-05 — Keyboard dan tombol tambahan
