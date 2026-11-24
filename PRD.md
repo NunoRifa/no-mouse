@@ -520,6 +520,7 @@ Target berikut perlu dikalibrasi lewat prototipe dan disetujui sebelum menjadi k
 - Keputusan pengguna 25 November 2026: Android melalui **Google Play**, iOS melalui **App Store**, dan pendamping Windows melalui **GitHub Releases pada repository resmi proyek**. Situs distribusi tersendiri bukan kebutuhan yang ditetapkan.
 - Ini keputusan kanal produk, bukan izin memublikasikan rilis sekarang, membeli akun/sertifikat, mengunggah kredensial, atau mengaktifkan CD. Pengembangan tetap pada `development`; rilis stabil menunggu aplikasi selesai dan QA rilis lulus sesuai `CLAUDE.md`.
 - Keanggotaan developer, biaya, identifier final, signing paket Windows, keaslian unduhan, disclosure komponen berprivilege untuk lock screen, kebijakan privasi, dan kepatuhan store tetap perlu disiapkan serta diverifikasi. Jangan menganggap hosting GitHub Releases menggantikan verifikasi keaslian paket.
+- Kesiapan menurut pengguna 25 November 2026: **belum memiliki keanggotaan Apple Developer Program maupun akun Google Play Console**. Publikasi store dan jalur TestFlight belum siap; pengembangan serta CI tanpa signing dapat dilanjutkan. Pendaftaran, verifikasi identitas, penerimaan syarat, pembayaran, dan pengelolaan kredensial harus dilakukan/disetujui pengguna secara terpisah; belum ada pembelian atau pendaftaran yang dilakukan.
 
 ## 14. Milestone hasil dan gate rilis
 
