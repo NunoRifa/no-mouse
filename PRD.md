@@ -505,7 +505,7 @@ Target berikut perlu dikalibrasi lewat prototipe dan disetujui sebelum menjadi k
 - Status tidak bergantung warna/getaran saja; area sentuh mengikuti pedoman platform dan tetap dapat dipakai dengan teks diperbesar.
 - Konfirmasi berisiko menyebut tindakan dan komputer tujuan, dengan pilihan batal jelas.
 - Mendukung orientasi/ukuran viewport tanpa salah koordinat meskipun landscape belum dipoles sebagai fitur tambahan.
-- Antarmuka awal diusulkan Bahasa Indonesia. Bahasa lain **TBD — validasi kebutuhan distribusi**; jangan menyamakan bahasa antarmuka dengan kemampuan teks Unicode.
+- Keputusan pengguna 25 November 2026: aplikasi HP mendukung **Bahasa Indonesia dan Inggris**, mengikuti bahasa HP secara default dengan pilihan manual. Pilihan pengaturan: **Ikuti sistem / Bahasa Indonesia / English**; override manual disimpan lokal dan tetap berlaku setelah aplikasi dibuka ulang. Usulan fallback bila bahasa sistem tidak didukung: Inggris. Seluruh label, status, error, bantuan, konfirmasi, dan aksesibilitas harus diterjemahkan; penggantian bahasa tidak mengubah teks yang diketik ke komputer, nama aplikasi, atau konten desktop. Bahasa pendamping Windows serta fallback belum dikonfirmasi pengguna; jangan menyamakan bahasa UI dengan kemampuan input Unicode.
 - Tidak mengklaim seluruh desktop remote dapat diakses penuh pembaca layar HP; cakupan aksesibilitas tampilan remote perlu diuji dan batas diumumkan.
 
 ### 13.4 Pengukuran penggunaan dan monetisasi
