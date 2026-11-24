@@ -233,6 +233,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 ### FR-07 — Media, aplikasi, jendela, dan browser
 
 - Media: play/pause, sebelumnya/berikutnya, volume naik/turun, dan fungsi kontrol media referensi yang telah dipastikan maknanya.
+- Konteks penggunaan yang dikonfirmasi pengguna 25 November 2026: Netflix, YouTube, YouTube Music, dan Spotify melalui Chrome. Keempatnya menjadi sasaran validasi kompatibilitas; ini bukan bukti bahwa setiap layanan mendukung queue, stop, atau seluruh perintah yang sama. Perilaku per layanan masih perlu diuji sebelum dijamin.
 - Aplikasi: tampilkan aplikasi berjalan yang dapat diaktifkan dan daftar peluncur yang didukung; jangan menjanjikan semua aplikasi/semua format instalasi dapat diluncurkan.
 - Jendela: tindakan sesuai referensi, termasuk aktivasi dan kontrol jendela yang dikonfirmasi dalam inventaris. Tindakan tutup mengikuti dialog simpan Windows, tidak memaksa kehilangan data.
 - Browser: kembali/maju, refresh, home, zoom, tab/jendela baru atau tutup sesuai pemetaan referensi, serta shortcut situs bawaan. Netflix dan YouTube merupakan kebutuhan utama; daftar shortcut final TBD.
