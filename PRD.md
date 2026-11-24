@@ -416,7 +416,7 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 |---|---|---|
 | `asset/action-panel.jpg` | Daftar ikon aplikasi, penanda aplikasi aktif, akses aplikasi | FR-07 |
 | `asset/browser-panel.jpg` | Kembali/maju, zoom, refresh, home, kontrol tab/jendela, shortcut situs | FR-07 |
-| `asset/control-panel-1.jpg` | Play/pause, sebelumnya/berikutnya, volume, ikon daftar/stop/tutup | FR-07; makna ikon daftar dan tutup perlu konfirmasi |
+| `asset/control-panel-1.jpg` | Play/pause, sebelumnya/berikutnya, volume; ikon daftar kanan atas menampilkan queue, kotak di bawahnya menjalankan stop (dikonfirmasi pengguna 24 November 2026); X merah belum diketahui | FR-07; lokasi tampilan queue dan makna X merah perlu konfirmasi. Jangan menganggap X merah sebagai tutup aplikasi tanpa bukti |
 | `asset/control-panel-2.jpg` | Matikan, Tidur, Mulai Ulang, Keluar | FR-09 |
 | `asset/copy-paste-panel.jpg` | Salin ke komputer, salin dari komputer | FR-08 |
 | `asset/keyboard-panel.jpg` | Keyboard sistem HP, area kontrol mouse | FR-04, FR-05 |
