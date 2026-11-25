@@ -264,6 +264,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 ### FR-09 — Daya dan sesi Windows
 
 - Mendukung shutdown, sleep, restart, dan logout pada kondisi OS/perangkat yang mendukung.
+- Keputusan pengguna 25 November 2026: **kontrol daya hanya tersedia setelah Windows dibuka kuncinya, dengan konfirmasi sebelum dijalankan**. Saat terkunci, tombol nonaktif dengan alasan jelas dan operasi ditolak di sisi Windows. Periksa kembali status lock dan keabsahan sesi sebelum eksekusi, termasuk jika Windows terkunci setelah dialog konfirmasi dibuka. Jika diblokir karena lock, permintaan dibatalkan, bukan diantrikan untuk dijalankan setelah unlock; tindakan baru memerlukan konfirmasi baru.
 - Konfirmasi menyebut nama komputer dan tindakan: misalnya **Restart komputer ini? Pekerjaan yang belum disimpan dapat terganggu.** Batal menjadi pilihan aman.
 - Tidak memaksa aplikasi menutup atau mengabaikan dialog simpan. Jika Windows memblokir operasi, tampilkan status yang dapat diketahui tanpa menyatakan hasil pasti.
 - Perintah tidak diantrikan untuk dieksekusi setelah reconnect, tidak diulang otomatis, dan ketukan ganda tidak menghasilkan tindakan berulang.
