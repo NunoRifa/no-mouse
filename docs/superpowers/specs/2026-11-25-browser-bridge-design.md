@@ -1,6 +1,6 @@
 # Desain Jembatan Browser Hybrid
 
-Tanggal: 25 November 2026. Status: **pendekatan hybrid dipilih pengguna; desain teknis ini menunggu persetujuan**. Tidak ada kode, ekstensi, native host, registrasi browser, atau listener yang dibuat/dipasang oleh dokumen ini.
+Tanggal: 25 November 2026. Status: **pendekatan hybrid dan desain teknis disetujui pengguna dalam percakapan; rencana implementasi berikutnya masih perlu direview**. Tidak ada kode, ekstensi, native host, registrasi browser, atau listener yang dibuat/dipasang oleh dokumen ini.
 
 Acuan: [PRD](../../../PRD.md), [riset dan probe media](../../feasibility/media-browser.md), [aturan repository](../../../CLAUDE.md).
 
@@ -15,7 +15,7 @@ Bukti saat ini: dua tab YouTube dengan status playing/paused yang ditukar tetap 
 | Pendekatan | Trade-off | Keputusan |
 |---|---|---|
 | GSMTC saja | Komponen sedikit; dapat mengendalikan sesi aplikasi yang diekspos Windows, bukan jaminan tab browser/queue | Tetap digunakan untuk sumber yang tidak ambigu seperti kandidat sesi aplikasi desktop; tidak cukup sebagai satu-satunya pembeda browser |
-| **Hybrid extension + native messaging + GSMTC** | Identitas tab melalui browser, kontrol native melalui Windows; menambah pemasangan/izin/pengujian tiga browser | **Dipilih pengguna**. Desain rinci dan pemasangan tetap perlu disetujui |
+| **Hybrid extension + native messaging + GSMTC** | Identitas tab melalui browser, kontrol native melalui Windows; menambah pemasangan/izin/pengujian tiga browser | **Pendekatan dan desain dipilih/disetujui pengguna**. Eksekusi rencana dan pemasangan tetap mengikuti gate persetujuan terpisah |
 | Shortcut/klik global untuk meniru semua layanan | Bergantung fokus, layout, dan timing; berisiko mengontrol target salah | Bukan dasar integrasi produk |
 
 ### Non-goal prototipe pertama
@@ -147,7 +147,7 @@ Jangan menjanjikan extension dapat memanggil handler `navigator.mediaSession` mi
 
 ## 10. Tahapan dan gate persetujuan
 
-- **Sekarang:** tulis/review desain; pendekatan hybrid sudah dipilih, detail dokumen ini masih proposal.
+- **Sekarang:** desain teknis disetujui; [rencana implementasi](../plans/2026-11-25-browser-bridge.md) disusun untuk review sebelum eksekusi Native.
 - **Setelah desain disetujui:** rencana implementasi kecil untuk extension Chrome read-only dan native host uji, tanpa listener HP atau service. Tes parsing/lifecycle wajib, bukan membuat seluruh arsitektur produksi sekaligus.
 - **Sebelum pemasangan/eksekusi host registration:** minta izin spesifik untuk profil uji, path binary/manifest, extension ID dan entri HKCU yang nyata. Tidak menganggap persetujuan desain sebagai izin mengubah profil browser harian.
 - **Setelah prototipe berhasil:** review hasil, baru desain command playback/site adapter. Edge/Firefox, transport LAN produk, serta integrasi GSMTC WPF mendapatkan tahap uji masing-masing.
