@@ -253,6 +253,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 ### FR-08 — Clipboard teks dua arah
 
 - Keputusan pengguna 25 November 2026: MVP hanya menyediakan **clipboard teks manual dua arah**, tanpa sinkronisasi otomatis dan tanpa transfer gambar/file. Transfer hanya setelah pengguna memilih **Kirim Teks ke Komputer** atau **Ambil Teks dari Komputer**. Tidak ada paste atau Enter otomatis; pengguna melakukan paste secara terpisah. Izin clipboard mengikuti aturan Android/iOS yang berlaku.
+- Keputusan pengguna 25 November 2026: **clipboard dinonaktifkan selama Windows terkunci**, dua arah. Tombol menjelaskan bahwa Windows harus dibuka terlebih dahulu; Windows juga menolak operasi di sisi penerima, bukan hanya menonaktifkan UI HP. Permintaan tertunda tidak boleh dieksekusi otomatis setelah unlock. Input password tetap melalui keyboard remote, bukan mekanisme clipboard. Perubahan lock saat transfer harus diperiksa sebelum membaca atau menerapkan clipboard; data yang sudah diterima sebelum lock tidak dapat ditarik kembali.
 - Pengguna diberi tahu bahwa clipboard tujuan akan diganti. Jangan tampilkan seluruh teks sensitif sebagai preview otomatis.
 - Mengirim ke komputer mengganti clipboard saja, tidak otomatis paste atau menekan Enter. Mengambil dari komputer mengganti clipboard HP sesuai izin OS.
 - Usulan batas 100 KB teks UTF-8 per transfer. Teks kosong, format nonteks, dan ukuran berlebih menghasilkan pesan jelas tanpa menimpa clipboard tujuan.
