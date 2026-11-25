@@ -489,7 +489,7 @@ Keputusan pengguna 25 November 2026: target awal pada LAN sehat adalah **p95 inp
 
 | Area | Target usulan | Cara ukur |
 |---|---|---|
-| Pairing mudah | Minimal 9 dari 10 peserta baru berhasil tanpa bantuan dalam 2 menit | Mulai dari kedua aplikasi terpasang dan siap; waktu instalasi dilaporkan terpisah |
+| Pairing mudah | **Disetujui pengguna 25 November 2026:** minimal 9 dari 10 pengguna baru berhasil pairing tanpa bantuan dalam ≤2 menit per peserta | Mulai setelah kedua aplikasi terpasang dan siap di LAN yang saling terjangkau; termasuk memulai pairing, scan QR, konfirmasi HP/Windows, dan koneksi terautentikasi berhasil. Waktu instalasi diukur terpisah. Target 2 menit bukan perpanjangan masa berlaku QR 120 detik. Komposisi peserta Android/iOS perlu ditetapkan; belum diuji |
 | Koneksi ulang | p95 maksimal 5 detik | Minimal 30 percobaan per platform HP pada LAN acuan, komputer aktif dan aplikasi siap |
 | Input responsif | p95 maksimal 100 ms untuk klik/ketikan menjadi terlihat pada monitor PC | Pengukuran end-to-end, minimal 100 peristiwa per platform; pisahkan dari delay layar HP |
 | Tampilan membantu kontrol | p95 delay tampilan maksimal 500 ms dan pembaruan sekitar 5 fps saat desktop berubah | Desktop acuan 1920×1080; ukur penangkapan/perubahan sampai terlihat di HP, bukan hanya jaringan |
