@@ -169,7 +169,15 @@ Pengguna mengonfirmasi dua tab YouTube disiapkan, salah satunya paused. Enumeras
 
 Hasil ini **tidak membuktikan dua tab dapat dipilih secara independen melalui GSMTC** pada konfigurasi uji tersebut. Tidak boleh memunculkan dua target HP berdasarkan dua tab yang dilaporkan pengguna bila API hanya memberikan satu sesi. Karena atribusi sumber sengaja tidak dibaca, jangan menyimpulkan sesi tunggal pasti milik tab tertentu atau bahwa semua versi Chrome selalu menggabungkan tab. Pengguna kemudian menukar tab yang playing/paused dan meminta probe ulang: hasil tetap **1 sesi Playing**, dengan flag identik (Play false, Pause/Stop true, Next/Previous false). Ordinal anonim bukan identitas stabil, sehingga hasil identik tidak membuktikan bahwa objek sesi atau tab pemiliknya tetap sama. Tahap anonim ini belum memberikan pembeda per-tab; mengulang pertukaran serupa tanpa sumber/fixture tambahan tidak cukup. Langkah validasi berikut: atribusi **aplikasi sumber** minimum dan versi browser, tanpa judul/URL/metadata media atau command; sumber aplikasi tetap bukan ID tab.
 
-**Status kini: akses API lokal baca-saja terbukti; fixture dua tab hanya menghasilkan satu sesi anonim. Pemilihan per-tab, queue, kompatibilitas lintas layanan/browser dan integrasi produk belum terbukti.**
+### 9.2 Atribusi sumber dengan persetujuan pengguna
+
+Pengguna memberi izin membaca identitas aplikasi sumber dan versi Chrome saja. Probe berikutnya mengembalikan **1 sesi `Playing` dengan `SourceAppUserModelId = Chrome`**. Tidak memanggil media properties atau membaca judul, URL, cookie; tidak mengirim command.
+
+Versi binary Chrome terpasang pada lokasi standar: **158.0.8127.88**. Path/version executable proses Chrome yang sedang berjalan tidak berhasil dibaca; jangan menyebut versi binary terpasang sebagai bukti pasti versi proses aktif. Tidak membaca command line proses atau profile browser untuk mengatasi keterbatasan ini.
+
+**Kesimpulan terbatas:** sesi yang terekspos saat probe berasal dari aplikasi Chrome, tetapi source ID `Chrome` tidak mengidentifikasi tab. Dua tab fixture belum terbukti tampil sebagai dua sesi mandiri. Tidak ada dasar untuk menjamin target per-tab dengan GSMTC saja pada konfigurasi ini. Jika per-tab wajib, langkah berikut adalah evaluasi desain jembatan browser atau pembuktian mekanisme pembeda lain; pemasangan extension dan transport tetap memerlukan persetujuan terpisah.
+
+**Status kini: akses API dan atribusi Chrome terbukti; identitas per-tab, queue, kompatibilitas lintas layanan/browser dan integrasi produk belum terbukti.**
 
 ## Sumber resmi
 
