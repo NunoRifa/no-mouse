@@ -78,7 +78,8 @@ Pembaruan: 25 November 2026. Source fondasi: `c472014`; keputusan discovery samp
 
 ### 3.2 Studi kelayakan dan desain — belum selesai
 
-- [ ] **Prioritas pertama: lock screen Windows 11 x64.** Buktikan jalur input/capture berizin dengan hak minimum, isolasi akun, instalasi/signing, kebijakan secure attention, dan penolakan panel terlarang. Jangan menganggap tray atau Run as administrator cukup.
+- [x] Riset dokumentasi awal lock screen selesai: [studi kelayakan](docs/feasibility/windows-lock-screen.md). Tray biasa tidak cukup; Session 0, UIPI dan akses capture secure desktop memiliki batas terpisah. Rekomendasi kandidat broker/helper terisolasi, **bukan bukti runtime atau persetujuan arsitektur**.
+- [ ] **Prioritas pertama: buktikan lock screen Windows 11 x64.** Desain spike lokal terisolasi perlu disetujui sebelum eksekusi/pemasangan komponen privilege; uji input/capture, hak minimum, isolasi akun, IPC, instalasi/signing, secure attention, dan penolakan panel terlarang. Tidak ada service dipasang atau fitur lock screen yang sudah diuji.
 - [ ] Buktikan pemilihan target media spesifik, termasuk beberapa tab browser, queue/stop, serta identitas target setelah ditutup/dibuka ulang; buat matriks kemampuan, unknown, unsupported, dan error sementara.
 - [ ] Buktikan desktop gabungan, koordinat negatif/celah antar monitor, DPI/resolusi berbeda, hotplug, batas gerak remote dan interaksi mouse fisik; tentukan kapasitas/performa dengan bukti.
 - [ ] Desain keamanan pairing/protokol: identitas kedua pihak, replay, rate limit, pencabutan, penyimpanan kredensial, kapan token QR dikonsumsi, serta pembatalan halaman. Durasi QR/persetujuan pertama tidak perlu ditanyakan ulang.
