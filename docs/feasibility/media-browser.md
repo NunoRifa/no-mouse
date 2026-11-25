@@ -1,6 +1,6 @@
 # Studi Kompatibilitas Media dan Browser
 
-Tanggal: 25 November 2026. Status: **riset dokumentasi selesai; kompatibilitas No Mouse belum diuji pada layanan/browser target**.
+Tanggal: 25 November 2026. Status: **riset dokumentasi dan probe API lokal baca-saja selesai; kompatibilitas No Mouse per layanan/browser belum diuji**.
 
 Acuan: [PRD.md](../../PRD.md), FR-07, SEC-06/09. Tidak membuat ekstensi, meminta host permission, memasang software, menjalankan browser automation, atau mengirim identitas proyek ke riset eksternal.
 
@@ -141,7 +141,29 @@ Jangan mencatat URL lengkap, judul sensitif, cookie, atau history dalam log; nam
 - Tidak ada raw URL, credential/cookie, isi tab atau metadata personal di log/telemetry.
 - Sebelum extension dipasang, buat desain permission dan distribusi per browser serta minta persetujuan terpisah.
 
-**Status kini: riset dokumentasi memberi dasar A sebagai prioritas feasibility, tetapi tidak ada pengujian runtime yang membuktikan target pengguna. Implementasi queue/cross-browser tetap terbuka.**
+## 9. Hasil probe lokal baca-saja
+
+Probe dijalankan 25 November 2026 melalui Windows PowerShell dan proyeksi WinRT bawaan, **bukan melalui aplikasi WPF No Mouse**. Tidak membuat source probe permanen, memasang package/manifest, membuka port, membaca source app ID/judul/URL, atau mengirim perintah transport. Tidak ada perubahan kode produk.
+
+| Item | Hasil aktual |
+|---|---|
+| OS | Windows 11 Home, version 10.0.26200, build 26200, 64-bit |
+| Privilege | Proses probe tidak elevated |
+| Resolusi type | `GlobalSystemMediaTransportControlsSessionManager` berhasil |
+| `RequestAsync` dan `GetSessions()` | Berhasil; 1 sesi tersedia |
+| Identitas sesi | Hanya ordinal sementara `Session-1`; tidak memetakan browser/layanan |
+| Playback status | `Playing` |
+| Capability yang dilaporkan | Play false; Pause true; Stop true; Next false; Previous false |
+| Input/playback | Tidak ada command yang dikirim; pemutaran tidak diubah oleh probe |
+| Data sensitif | Tidak memanggil `TryGetMediaPropertiesAsync` atau membaca source identifier/judul/URL/cookie |
+
+**Yang terbukti:** API dapat diakses oleh host PowerShell non-admin pada mesin ini dan satu sesi melaporkan flag dinamis. `Stop=true` bukan bukti bahwa perintah stop berhasil, bukan dukungan queue, dan tidak dapat diatribusikan ke layanan tertentu karena sumber sengaja tidak dibaca.
+
+**Yang belum terbukti:** proyeksi WinRT/manifest/TFM pada WPF .NET 10, identitas per-tab, beberapa sesi, ketahanan ID, perilaku setiap layanan/browser, queue, hasil command, serta lock-state filtering produk. Keberhasilan host PowerShell tidak menjamin bentuk deployment WPF bekerja sama; jangan menghapus gate packaging berdasarkan probe ini.
+
+Langkah berikut membutuhkan fixture media nonpribadi yang jelas: pengguna menyiapkan media uji pada dua tab browser yang disebutkan dan, jika tersedia, Spotify desktop. Enumerasi anonim dapat diulang saat pengguna mengubah target secara manual untuk mengamati jumlah/capability tanpa membaca judul/URL. Sebelum mengirim pause/stop/next, minta izin tahap transport dan pilih target yang tidak ambigu; jangan mengontrol sesi personal yang kebetulan sedang aktif.
+
+**Status kini: akses API lokal baca-saja terbukti; kompatibilitas per-target dan integrasi produk belum terbukti. Queue/cross-browser tetap terbuka.**
 
 ## Sumber resmi
 
