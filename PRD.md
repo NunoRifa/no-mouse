@@ -2,10 +2,10 @@
 
 | Atribut | Nilai |
 |---|---|
-| Versi | 0.1 |
-| Tanggal | 23 November 2026 |
-| Status | Draf untuk review produk; bukan persetujuan implementasi |
-| Sasaran rilis | Android dan iOS sebagai pengontrol komputer Windows |
+| Versi | 0.2 |
+| Tanggal | 25 November 2026 |
+| Status | Keputusan discovery dikonsolidasikan; detail usulan, desain teknis, dan QA belum seluruhnya ditutup |
+| Sasaran rilis | Android 10/API 29+, iOS 18.0+, mengontrol Windows 11 x64 |
 | Model awal | Gratis sepenuhnya, tanpa iklan atau fitur berbayar |
 | Pengembangan | Solo; anggaran dan target rilis fleksibel |
 
@@ -22,7 +22,14 @@ Kasus utama: pengguna sedang menonton Netflix sambil rebahan; mouse dan keyboard
 - **TBD:** belum memiliki bukti atau keputusan memadai; metode validasi dicantumkan.
 - Kata **harus** pada usulan menjelaskan syarat rancangan yang direkomendasikan, bukan klaim bahwa pengguna telah menyetujuinya atau fitur sudah dibuat.
 
-Dokumen ini menggabungkan discovery, dua profil pengguna, delapan user story, prioritas fitur, alur pengguna, daftar halaman, serta hasil review kritis. Tidak menentukan framework, protokol, pustaka, atau arsitektur implementasi.
+Dokumen ini menggabungkan discovery, dua profil pengguna, delapan user story, prioritas fitur, alur pengguna, daftar halaman, serta hasil review kritis. Tidak menentukan framework, protokol, pustaka, atau arsitektur implementasi. Keputusan eksplisit bertanggal dalam FR dan bagian 13 berlaku bersama ringkasan 4.1; detail lain tetap usulan, bukan otomatis persetujuan pengguna.
+
+### 1.2 Status implementasi dan bukti
+
+- Fondasi Flutter/WPF dan CI sudah tersedia; fitur remote belum dibuat. Riwayat scope fondasi terpisah dari kebutuhan produk terbaru.
+- Bukti QA tersedia di [docs/qa/foundation.md](docs/qa/foundation.md): tiga job CI pada snapshot `21b10d9` lulus, build/startup WPF lokal lulus, dan tes widget mobile 2/2 lulus. Ini bukti fondasi, bukan hasil pairing, lock screen, media, multi-monitor, atau performa remote.
+- Build APK lokal terakhir masih terblokir akses artefak Flutter; pengujian iPhone/Android fisik belum dilakukan. Status pengerjaan aktif: [TODO.md](TODO.md).
+- Persetujuan kebutuhan atau kanal distribusi tidak memberi izin pembelian, publikasi, pemasangan komponen berprivilege tertentu, atau merge `master` sebelum gate QA rilis lulus.
 
 ## 2. Masalah dan bukti
 
@@ -42,7 +49,7 @@ Pengguna yang berada jauh dari meja harus bangun untuk tindakan kecil di kompute
 
 Pengontrol lokal dengan pairing sederhana, mouse/keyboard responsif, dan tampilan layar terbaca akan membantu pengguna Windows menyelesaikan aktivitas hiburan serta aktivitas ringan dari HP tanpa kembali ke meja setelah pemasangan awal.
 
-Bukti keberhasilan awal: peserta uji dapat memasangkan perangkat, mencari dan memutar tontonan, mengetik, memindahkan teks, serta mengakhiri sesi tanpa bantuan. Target pengukuran di bagian 13 merupakan usulan, bukan hasil pengujian.
+Bukti yang dicari untuk menguji hipotesis: peserta dapat memasangkan perangkat, mencari dan memutar tontonan, mengetik, memindahkan teks, serta mengakhiri sesi tanpa bantuan. Target yang sudah disetujui dan target yang masih usulan dipisahkan di bagian 13; belum ada hasil uji fitur remote.
 
 ## 3. Pengguna sasaran
 
@@ -83,7 +90,22 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 | Kepercayaan | Disimpan sampai dicabut dari aplikasi Windows |
 | Kontrol | Touchpad dan sentuh langsung |
 | Layar | Untuk melihat kursor dan membaca hasil ketikan; bukan mengejar streaming video/audio |
-| Fungsi | Seluruh kelompok fungsi pada delapan screenshot referensi wajib tersedia |
+| Fungsi referensi | Kelompok fungsi delapan screenshot wajib; X merah panel media dan tombol paling kanan `key-panel-2.jpg` dikecualikan dari MVP |
+| Batas HP | Android 10/API 29+ dan iOS 18.0+; kompatibilitas nyata belum dibuktikan |
+| Pairing awal | Persetujuan Windows untuk perangkat baru; QR sekali pakai berlaku 120 detik |
+| Pengontrol | Satu HP aktif per komputer; HP kedua ditolak sampai sesi pertama berakhir |
+| Siklus sesi | HP lock/background mengakhiri sesi, kepercayaan tetap tersimpan; ganti pengguna Windows mengakhiri sesi |
+| Windows terkunci | Pertahankan sesi dan izinkan reconnect perangkat tepercaya; kontrol lock screen/password manual wajib MVP, kelayakan belum terbukti |
+| Batas lock screen | Hanya input login dan tampilan lock screen manual; Browser, Media/volume, Aplikasi, clipboard, dan daya nonaktif |
+| Multi-monitor | Pilih satu atau semua; desktop gabungan mengikuti susunan Windows, zoom/pan wajib; gerak remote dibatasi pada monitor pilihan |
+| Privasi layar | Tampilkan layar secara manual, termasuk setelah reconnect |
+| Media | Target dipilih di HP dan tetap selama sesi; volume mengatur Windows; tombol tak didukung nonaktif dengan alasan |
+| Aplikasi | Daftar per jendela dengan nama aplikasi/judul; shortcut diatur di Windows dan dijalankan dari HP |
+| Clipboard/daya | Clipboard teks manual tanpa paste/Enter otomatis; daya memerlukan konfirmasi; keduanya hanya saat Windows terbuka |
+| Bahasa | HP dan Windows Indonesia/Inggris mengikuti OS dengan pilihan manual; fallback Windows Inggris, fallback HP masih usulan |
+| Distribusi | Google Play, App Store, GitHub Releases untuk Windows; akun store belum tersedia |
+| Diagnosis | Tanpa analytics/crash upload otomatis; log lokal tersanitasi, pembagian eksplisit |
+| Target uji disetujui | p95 input ≤100 ms, delay layar ≤500 ms, reconnect ≤5 detik; stabilitas 60 menit per platform; pairing 9/10 pengguna dalam ≤2 menit |
 | Monetisasi | Rilis awal gratis sepenuhnya; iklan/freemium dievaluasi saat mencapai sekitar 1.000–10.000 pengguna |
 | Sumber daya | Dikerjakan sendiri; anggaran dan jadwal fleksibel |
 | Layak rilis | Pairing mudah, kontrol responsif, semua fungsi wajib stabil |
@@ -130,11 +152,11 @@ Kedua profil merupakan **hipotesis persona**, bukan hasil segmentasi pasar terva
 | Audio komputer dan streaming video berkualitas tinggi | Bukan kebutuhan tampilan awal; ada batas DRM |
 | Iklan, pembayaran, langganan | Rilis pertama gratis sepenuhnya |
 | Transfer file, gambar clipboard, clipboard otomatis | Kebutuhan tervalidasi baru transfer teks eksplisit |
-| Beberapa HP mengontrol komputer bersamaan | Menghindari input bertabrakan; usulan satu pengontrol aktif per komputer |
+| Beberapa HP mengontrol komputer bersamaan | Satu pengontrol aktif per komputer sudah ditetapkan; koneksi kedua ditolak |
 | Kendali beberapa komputer sekaligus | Satu komputer aktif per HP; daftar komputer tersimpan tetap dapat tersedia |
 | Wake-on-LAN, login pertama setelah boot, dan kontrol UAC | Di luar MVP. Berbeda dari membuka kunci sesi Windows yang sudah aktif, yang wajib sejak MVP |
 
-Semua kategori fungsi referensi tetap masuk MVP. Tahapan pengerjaan tidak boleh dipakai untuk menyatakan rilis publik lengkap ketika panel wajib masih berupa placeholder.
+Kategori fungsi referensi masuk MVP dengan dua pengecualian eksplisit: **X merah panel media** dan **tombol paling kanan `key-panel-2.jpg`** ditunda. Lock screen, pemilihan satu/semua monitor, zoom/pan, shortcut aplikasi pilihan, dan bahasa ganda merupakan tambahan wajib yang telah disetujui. Tahapan pengerjaan tidak boleh dipakai untuk menyatakan rilis publik lengkap ketika fungsi wajib masih placeholder.
 
 ## 5. Delapan user story
 
@@ -163,13 +185,13 @@ Pencabutan akses dan kendali privasi Windows dijabarkan sebagai persyaratan keam
 | Semua ikon referensi dianggap jelas | Beberapa ikon media/jendela tidak memiliki label yang memastikan makna | Kelompok fungsi wajib; rincian ikon yang meragukan harus dikonfirmasi, bukan ditebak sebagai fakta |
 | Kontrol media dianggap universal | Shortcut dapat masuk ke aplikasi yang salah | Target tindakan ditampilkan; dukungan dinyatakan dalam matriks aplikasi yang diuji |
 | Tindakan daya dianggap selalu sukses | Shutdown memutus koneksi sebelum hasil teramati; dokumen belum tersimpan | Konfirmasi risiko, tidak memaksa tutup aplikasi; bedakan terkirim, diterima, dan hasil terkonfirmasi |
-| Windows tidak dibatasi | Janji tidak sengaja mencakup UAC, lock screen, login, ARM, dan banyak sesi | Tetapkan batas sesi desktop biasa; versi/arsitektur final wajib divalidasi sebelum rilis |
+| Windows tidak dibatasi | Lock screen, UAC, login pertama, ARM, dan banyak sesi memiliki kebutuhan berbeda | Windows 11 x64 saja; lock screen sesi aktif wajib melalui jalur yang disetujui dan teruji. Login pertama setelah boot, UAC, serta perpindahan akun otomatis di luar MVP |
 | Gratis dianggap tanpa biaya | Distribusi, signing, perangkat uji, dan akun store tetap membutuhkan biaya | Gratis untuk pengguna; biaya operasional serta kelayakan distribusi tetap perlu dihitung |
 | Syarat stabil belum terukur | Tidak ada tolok ukur lulus/gagal | Tambahkan usulan ambang performa, usability, dan matriks penerimaan |
 
 ## 7. Persyaratan fungsional dan kriteria penerimaan
 
-Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang sudah ditetapkan pada bagian 4.1.
+Butir yang berlabel **Keputusan pengguna** sudah ditetapkan. Penjabaran error handling, privasi, dan kriteria penerimaan tanpa label tersebut merupakan rekomendasi rancangan untuk review; bukan hasil implementasi atau persetujuan atas parameter numerik baru. Keputusan final diringkas pada 4.1; detail yang masih terbuka tercantum di bagian 16.
 
 ### FR-01 — Koneksi lokal dan identitas komputer
 
@@ -222,7 +244,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 - Modifier yang aktif terlihat; semua modifier dilepas saat putus, ganti mode, keluar panel, atau sesi berhenti. Kombinasi umum seperti Ctrl+C, Ctrl+V, Alt+Tab, dan Ctrl+L wajib diuji.
 - Teks tetap masuk ke aplikasi/kolom yang mendapat fokus di Windows; jangan mengklaim aplikasi dapat mengetahui semua kolom sensitif atau memindahkan fokus otomatis dengan aman.
 - Komposisi keyboard/IME dan backspace tidak boleh menggandakan atau memotong karakter. Dukungan bahasa tambahan perlu matriks tersendiri; jangan mengklaim semua IME.
-- Tidak menyediakan jalur melewati secure desktop, Ctrl+Alt+Delete, atau prompt elevasi Windows.
+- Tidak melewati autentikasi Windows atau perlindungan secure desktop. Input manual lock screen sesi pengguna yang sudah login wajib sesuai FR-03 melalui integrasi berizin yang masih perlu dibuktikan. Kontrol UAC dan pengiriman secure attention sequence Ctrl+Alt+Delete belum dijanjikan; jika kebijakan Windows memerlukannya, studi kelayakan harus menyatakan dukungan atau blocker secara eksplisit, bukan mematikan kebijakan keamanan.
 - **Penerimaan:** ketikan Indonesia/Inggris, karakter beraksen, emoji, komposisi IME yang dipilih, tombol navigasi, dan shortcut tidak terduplikasi. Informasi teks tidak dicatat dalam log.
 
 ### FR-06 — Tampilan layar komputer
@@ -232,7 +254,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 - Keputusan pengguna 25 November 2026: pengguna harus menekan **Tampilkan layar** terlebih dahulu; tersambung atau selesai pairing tidak otomatis mengirim isi layar komputer. Windows selalu menampilkan indikator ketika sesi/tampilan aktif. Keputusan pengguna 25 November 2026: setelah koneksi terputus dan tersambung kembali, tampilan tetap mati sampai **Tampilkan layar** ditekan lagi secara manual, meskipun sebelumnya aktif. Jangan memakai preferensi tersimpan atau permintaan lama untuk memulai kembali pengiriman layar. Sentuh langsung tetap tidak tersedia sampai tampilan baru aktif dan pemetaannya valid.
 - Tersedia tindakan hentikan tampilan tanpa mencabut perangkat, serta tindakan hentikan seluruh sesi dari Windows.
 - Bila tampilan gagal tetapi input masih aktif, tampilkan dua status terpisah. Sentuh langsung dinonaktifkan; touchpad boleh dilanjutkan setelah pengguna memahami bahwa layar tidak tersedia.
-- Konten DRM, secure desktop, dan permukaan yang dikecualikan OS mungkin tidak dapat ditampilkan; jangan mencoba melewati perlindungan.
+- Konten DRM, UAC, dan permukaan lain yang dibatasi OS dapat tidak tampil; tidak ada bypass perlindungan. Lock screen sesi aktif merupakan kebutuhan MVP terpisah: studi kelayakan harus membuktikan capture/input melalui integrasi Windows yang berizin, bukan menjadikan layar hitam sebagai hasil lulus. Jika tidak layak pada baseline yang dipilih, rilis terblokir atau diperlukan persetujuan perubahan scope; jangan mengklaim tray biasa sudah memenuhi kebutuhan.
 - Tidak merekam, menyimpan screenshot, atau menyimpan riwayat layar sebagai perilaku bawaan.
 - **Penerimaan:** gambar basi tidak ditampilkan seolah live. Teks/kursor tetap terbaca pada kondisi uji bagian 13. Perubahan monitor, lock screen, dan penolakan capture ditangani jelas.
 
@@ -305,7 +327,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 | SEC-07 | Aplikasi tidak menyediakan eksekusi shell bebas, membuka firewall global, mematikan proteksi OS, atau elevasi untuk melewati UAC | Review perilaku instalasi dan sesi |
 | SEC-08 | Pengguna Windows dapat melihat dan menghentikan akses; tidak ada mode akses tersembunyi | Uji indikator sesi, stop, lock, dan pergantian pengguna |
 | SEC-09 | Tidak ada pengiriman isi layar, ketikan, clipboard, kredensial, atau inventaris aplikasi ke layanan eksternal | Pemeriksaan aliran data dan perilaku jaringan |
-| SEC-10 | Paket rilis berasal dari kanal resmi dan keasliannya dapat diverifikasi; rilis tidak mendistribusikan rahasia bersama | Review distribusi/signing sesuai platform; rincian biaya/kanal TBD |
+| SEC-10 | Paket rilis berasal dari kanal resmi dan keasliannya dapat diverifikasi; rilis tidak mendistribusikan rahasia bersama | Kanal sudah ditetapkan pada 13.5; verifikasi signing, keaslian paket, akun dan biaya sebelum rilis |
 
 ### 8.3 Data dan retensi — keputusan dan usulan
 
@@ -366,7 +388,7 @@ Keputusan pengguna 25 November 2026: rilis awal **tanpa analytics dan tanpa peng
 1. Aplikasi menandai sesi tidak terhubung dan menghentikan input/tampilan lama.
 2. Input tertahan dilepas; klik sentuh langsung dinonaktifkan.
 3. Pengguna melihat status percobaan ulang atau memilih **Coba Lagi**.
-4. Setelah autentikasi dan tampilan/pemetaan siap, kontrol dilanjutkan tanpa replay aksi lama.
+4. Setelah autentikasi, input yang diizinkan dapat dilanjutkan tanpa replay aksi lama. Tampilan tetap mati sampai pengguna menekan **Tampilkan layar** lagi; sentuh langsung menunggu frame dan pemetaan baru yang valid.
 5. Bila gagal, bantuan mengarahkan pemeriksaan jaringan, Windows, VPN, dan firewall tanpa menyuruh menonaktifkan proteksi.
 
 ### 9.5 Mencabut HP
@@ -375,6 +397,15 @@ Keputusan pengguna 25 November 2026: rilis awal **tanpa analytics dan tanpa peng
 2. Pilih **Cabut Akses**; dialog menjelaskan sesi akan diputus dan pairing ulang diperlukan.
 3. Setelah konfirmasi, akses input, layar, clipboard, dan daya berhenti.
 4. HP menampilkan **Akses dicabut — pasangkan ulang** dan tidak mencoba melewati pencabutan.
+
+### 9.6 Windows terkunci dan dibuka kembali
+
+1. Windows terkunci pada akun yang sudah login; sesi remote tetap ada jika aplikasi/komponen yang disetujui masih berjalan. HP tepercaya boleh reconnect jika tidak ada pengontrol lain.
+2. HP menyembunyikan metadata desktop dan menonaktifkan Browser, Media/volume, Aplikasi, clipboard, serta daya. Windows menegakkan pembatasan yang sama pada permintaan masuk.
+3. Pengguna dapat mengaktifkan tampilan lock screen secara manual dan memasukkan password langsung melalui keyboard remote. Tidak ada pengambilan/penyimpanan password, auto-login, atau bypass autentikasi.
+4. Setelah Windows mengonfirmasi unlock, panel yang diizinkan kembali tersedia dengan metadata segar. Permintaan yang dibatalkan saat terkunci tidak dijalankan ulang. Pergantian pengguna mengakhiri sesi, bukan mengalihkan akses ke akun baru.
+
+**Gate:** alur ini wajib MVP tetapi belum diuji; pilihan integrasi privilege dan penanganan perpindahan capture desktop harus diputuskan melalui studi kelayakan sebelum implementasi keamanan dibekukan. Apakah stream yang sebelumnya aktif perlu persetujuan ulang tepat saat transisi lock (tanpa reconnect) masih usulan desain, bukan keputusan baru dalam alur ini.
 
 ## 10. Halaman, panel, dan isi
 
@@ -386,6 +417,7 @@ Keputusan pengguna 25 November 2026: rilis awal **tanpa analytics dan tanpa peng
 | Hubungkan Komputer | Panduan Windows/jaringan, scan QR, izin kamera, konfirmasi identitas | Izin ditolak, QR salah/kedaluwarsa, menunggu persetujuan Windows, berhasil |
 | Kontrol Komputer | Identitas komputer, status input/layar, monitor pilihan bila perlu, tampilan desktop, dua mode, pemilih panel, Putuskan Koneksi | Live, layar basi, layar tidak tersedia, reconnect, sesi dihentikan |
 | Bantuan Koneksi | Pemeriksaan pendamping Windows, izin jaringan, keterjangkauan, VPN/firewall/isolasi, Coba Lagi | Tidak membuat diagnosis pasti tanpa bukti |
+| Pengaturan | Ikuti sistem / Bahasa Indonesia / English; pilihan manual disimpan lokal | Fallback untuk bahasa sistem lain masih usulan Inggris |
 
 **Panel di Kontrol Komputer, bukan halaman penuh terpisah:**
 
@@ -394,8 +426,8 @@ Keputusan pengguna 25 November 2026: rilis awal **tanpa analytics dan tanpa peng
 | Mouse | Touchpad, tombol kiri/tengah/kanan, scroll dan drag; toggle mode sentuh langsung |
 | Keyboard | Keyboard sistem; tampilan komputer tetap dapat diperiksa |
 | Tombol Tambahan | Navigasi, F1–F12, numpad, modifier dan indikator aktif |
-| Media | Kontrol pemutaran dan volume; target/status dukungan |
-| Aplikasi | Aplikasi berjalan, peluncur yang didukung, penanda aplikasi aktif dan kontrol jendela terkonfirmasi |
+| Media | Target pilihan selama sesi, kontrol didukung, volume Windows; nonaktif saat terkunci |
+| Aplikasi | Daftar per jendela dengan nama/judul; shortcut yang diatur di Windows; nonaktif saat terkunci |
 | Browser | Navigasi, tab/jendela, zoom, shortcut situs |
 | Clipboard | Dua arah transfer teks, penjelasan clipboard tujuan, status, izin bila perlu |
 | Daya & Sesi | Shutdown, sleep, restart, logout; dialog konfirmasi terpisah |
@@ -420,6 +452,8 @@ Hierarki ini merupakan usulan UX, bukan desain visual final. Panel tidak boleh m
 | Beranda | Identitas komputer, status layanan lokal, HP aktif, status berbagi layar, Pasangkan HP, Putuskan Sesi, Perangkat Tepercaya | Tidak aktif, siap, terhubung, gangguan izin/jaringan |
 | Pasangkan HP | QR sementara, waktu berlaku, identitas untuk dicocokkan, permintaan pasangan, Setujui/Tolak, QR Baru, Batal | Menunggu, kedaluwarsa, ditolak, berhasil |
 | Perangkat Tepercaya | Daftar pasangan, indikator sesi aktif, Cabut Akses per perangkat, Cabut Semua | Kosong, pencabutan, sesi terputus |
+| Shortcut Aplikasi | Tambah/hapus aplikasi pilihan pada komputer ini; daftar yang dapat dijalankan HP | Kosong, target hilang, aplikasi tidak didukung |
+| Pengaturan | Ikuti sistem / Indonesia / English, pilihan manual lokal; lokasi bantuan/diagnosis sesuai desain akhir | Bahasa sistem tidak didukung memakai Inggris |
 
 Indikator sesi dan akses penghentian harus tetap dapat ditemukan ketika jendela utama diminimalkan. Bentuk affordance mengikuti standar Windows, tidak ditentukan oleh PRD ini.
 
@@ -477,9 +511,9 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 - Keputusan pengguna 25 November 2026: rilis pertama hanya mendukung **Windows 11 x64**; Windows 10 dan Windows ARM ditunda. Versi fitur/build Windows 11 yang didukung masih perlu ditetapkan melalui uji API, lock screen, dan dukungan keamanan OS; jangan mengklaim semua build Windows 11 otomatis didukung.
 - Keputusan pengguna 25 November 2026: minimum iOS untuk rilis pertama adalah **iOS 18.0**; iOS 17 ke bawah di luar dukungan awal. Pengujian wajib pada iPhone XS/iOS 18.7.11 dan iPhone 13/iOS 26.1 yang tersedia; versi aktual dicatat saat uji. Deployment target proyek dan kompatibilitas plugin/API perlu diselaraskan serta diverifikasi sebelum rilis; keputusan produk ini bukan klaim konfigurasi atau runtime sudah diuji.
 - Keputusan pengguna 25 November 2026: minimum Android untuk rilis pertama adalah **Android 10 (API 29)**; versi lebih lama di luar dukungan awal. Konfigurasi minSdk, kompatibilitas plugin/API, dan pengujian perlu diselaraskan sebelum rilis. Minimum OS bukan target API distribusi Google Play; target API mengikuti ketentuan yang diverifikasi saat rilis. Pengguna mengonfirmasi 25 November 2026 bahwa belum ada HP Android fisik untuk pengujian. Emulator dan CI dapat dipakai selama pengembangan, tetapi pengujian kamera QR, jaringan lokal, input, background, dan performa pada perangkat nyata tetap menjadi blocker rilis Android; akses perangkat dapat melalui pinjaman atau penguji beta berizin.
-- Perangkat uji iOS tersedia menurut laporan pengguna 25 November 2026: **iPhone XS dengan iOS 18.7.11** dan **iPhone 13 dengan iOS 26.1**. Ini inventaris perangkat, bukan bukti pengujian No Mouse atau keputusan minimum iOS. Catat ulang versi aktual saat uji; akses signing/pemasangan tetap perlu disiapkan.
+- Perangkat uji iOS tersedia menurut laporan pengguna 25 November 2026: **iPhone XS dengan iOS 18.7.11** dan **iPhone 13 dengan iOS 26.1**. Ini inventaris perangkat, bukan bukti pengujian No Mouse; keputusan minimum iOS 18.0 dicatat terpisah di atas. Catat ulang versi aktual saat uji; akses signing/pemasangan tetap perlu disiapkan.
 - Keputusan pengguna 25 November 2026: browser rilis pertama mencakup **Chrome, Edge, dan Firefox** pada Windows 11 x64. Versi stabil tepat dicatat saat QA. Navigasi/shortcut browser dan integrasi media harus diuji pada ketiganya; pemilihan browser ini bukan bukti semua situs atau perintah media didukung identik. Matriks layanan × browser serta perilaku fitur tidak tersedia perlu disepakati dan diverifikasi sebelum klaim kompatibilitas publik.
-- Aplikasi media native dan peluncur aplikasi tambahan: **TBD — inventaris aplikasi pengguna lalu uji kompatibilitas**. Batas kompatibilitas harus ditulis, bukan klaim bekerja di semua aplikasi.
+- Spotify desktop sudah menjadi sasaran media native; dukungan perintahnya masih harus diuji. Tipe aplikasi yang dapat didaftarkan pada shortcut Windows dan peluncur lain masih **TBD — inventaris format aplikasi lalu uji**. Jangan mengklaim semua aplikasi dapat diluncurkan.
 - Satu sesi pengguna Windows yang sudah login, termasuk mempertahankan sesi remote dan membuka kembali lock screen dengan kredensial manual sesuai FR-03. Login pertama setelah boot tetap di luar MVP. Tidak menjanjikan dukungan Windows Server/RDP/multi-user.
 - Minimum keterbacaan dan input harus lulus pada HP Android dan iPhone fisik, bukan emulator saja.
 
@@ -489,13 +523,13 @@ Baseline final adalah blocker rilis. Dokumen ini tidak mengklaim versi OS/API te
 
 Keputusan pengguna 25 November 2026: target awal pada LAN sehat adalah **p95 input ≤100 ms** (terlihat di PC), **p95 keterlambatan tampilan ≤500 ms** (terlihat di HP), dan **p95 koneksi ulang ≤5 detik** (komputer aktif dan aplikasi siap). Ketiganya disetujui sebagai target pengujian, bukan klaim performa tercapai. Tidak ada hasil pengukuran fitur remote saat ini. Angka lain, termasuk sekitar 5 fps, jumlah sampel, definisi rinci LAN acuan, dan kapasitas multi-monitor, masih merupakan usulan yang perlu dikalibrasi/ditetapkan; jangan menganggap persetujuan tiga target ini menyetujui seluruh tabel.
 
-| Area | Target usulan | Cara ukur |
+| Area | Target dan status keputusan | Cara ukur / status bukti |
 |---|---|---|
 | Pairing mudah | **Disetujui pengguna 25 November 2026:** minimal 9 dari 10 pengguna baru berhasil pairing tanpa bantuan dalam ≤2 menit per peserta | Mulai setelah kedua aplikasi terpasang dan siap di LAN yang saling terjangkau; termasuk memulai pairing, scan QR, konfirmasi HP/Windows, dan koneksi terautentikasi berhasil. Waktu instalasi diukur terpisah. Target 2 menit bukan perpanjangan masa berlaku QR 120 detik. Komposisi peserta Android/iOS perlu ditetapkan; belum diuji |
-| Koneksi ulang | p95 maksimal 5 detik | Minimal 30 percobaan per platform HP pada LAN acuan, komputer aktif dan aplikasi siap |
-| Input responsif | p95 maksimal 100 ms untuk klik/ketikan menjadi terlihat pada monitor PC | Pengukuran end-to-end, minimal 100 peristiwa per platform; pisahkan dari delay layar HP |
-| Tampilan membantu kontrol | p95 delay tampilan maksimal 500 ms dan pembaruan sekitar 5 fps saat desktop berubah | Desktop acuan 1920×1080; ukur penangkapan/perubahan sampai terlihat di HP, bukan hanya jaringan |
-| Teks terbaca | Minimal 9 dari 10 peserta membaca teks uji dan memastikan hasil ketikan tanpa melihat monitor PC | Teks aplikasi 16 px pada desktop 1080p; zoom/pan wajib jika target gagal tanpa itu |
+| Koneksi ulang | **Disetujui:** p95 maksimal 5 detik; belum diukur | Minimal 30 percobaan per platform HP pada LAN acuan, komputer aktif dan aplikasi siap |
+| Input responsif | **Disetujui:** p95 maksimal 100 ms untuk klik/ketikan terlihat pada monitor PC; belum diukur | Pengukuran end-to-end, minimal 100 peristiwa per platform; pisahkan dari delay layar HP |
+| Tampilan membantu kontrol | **Disetujui:** p95 delay maksimal 500 ms. **Usulan:** sekitar 5 fps saat desktop berubah; belum diukur | Desktop acuan 1920×1080; ukur penangkapan/perubahan sampai terlihat di HP, bukan hanya jaringan |
+| Teks terbaca | **Usulan:** minimal 9 dari 10 peserta membaca teks uji dan memastikan hasil ketikan tanpa melihat monitor PC | Teks 16 px pada desktop 1080p sebagai usulan kondisi uji; zoom/pan sudah wajib MVP, bukan fitur bersyarat |
 | Tugas inti | Minimal 9 dari 10 peserta menyelesaikan skenario tontonan dan input ringan tanpa bantuan | Setelah pairing, tidak perlu kembali ke meja kecuali muncul batas OS yang dinyatakan |
 | Stabilitas sesi | **Disetujui pengguna 25 November 2026:** 60 menit penggunaan campuran pada masing-masing platform HP (Android dan iOS), tanpa crash, input tertahan, atau putus/reconnect tidak disengaja pada LAN sehat | Jalankan mouse, keyboard, panel, layar, dan clipboard pada perangkat fisik; catat perangkat, versi OS/aplikasi, kondisi jaringan, serta hasil. Tidak sengaja mengakhiri sesi lewat lock/background/daya dalam pengukuran sesi kontinu; transisi tersebut dan gangguan jaringan diuji terpisah. Belum dijalankan |
 | Pemulihan | Input tertahan dilepas maksimal 2 detik setelah hilangnya sesi terdeteksi; tidak ada replay | Injeksi gangguan koneksi saat drag, modifier, transfer, dan tindakan daya |
@@ -535,7 +569,7 @@ Tidak ada tanggal yang dijanjikan. Milestone menyatakan hasil pengguna, bukan da
 
 | Milestone | Hasil yang harus terbukti | Status |
 |---|---|---|
-| M1 — Kebutuhan dapat diuji | Arti ikon referensi, baseline dukungan, dan target uji disepakati; hipotesis persona diuji | Belum dimulai |
+| M1 — Kebutuhan dapat diuji | Keputusan inti dikonsolidasikan; inventaris aksi, detail desain, dan hipotesis persona masih perlu divalidasi | Berjalan; belum lulus gate |
 | M2 — Akses lokal dapat dipercaya | Pairing pertama, koneksi ulang, penolakan perangkat asing, pencabutan, dan penghentian sesi bekerja | Belum dimulai |
 | M3 — Kontrol inti dapat dipakai | Dua mode mouse, keyboard, dan tampilan layar memenuhi tugas serta target acuan | Belum dimulai |
 | M4 — Cakupan wajib lengkap | Seluruh panel referensi, clipboard, media/browser/aplikasi, dan daya lulus matriks | Belum dimulai |
@@ -544,11 +578,12 @@ Tidak ada tanggal yang dijanjikan. Milestone menyatakan hasil pengguna, bukan da
 ### Gate rilis publik
 
 - [ ] Baseline OS/perangkat/browser/aplikasi didokumentasikan dan diuji.
-- [ ] Semua ikon referensi terpetakan; tidak ada placeholder fungsi wajib.
+- [ ] Semua ikon yang masuk MVP terpetakan dan diuji; tidak ada placeholder fungsi wajib. Dua tombol yang disepakati ditunda pada bagian 11 tidak menjadi blocker.
 - [ ] Android dan iOS sama-sama lulus tugas inti serta seluruh fitur yang dijanjikan.
 - [ ] Pairing mudah, input responsif, dan stabilitas memenuhi target yang sudah disetujui.
 - [ ] Tidak ada temuan keamanan kritis/tinggi yang belum ditangani: akses tanpa izin, kebocoran data, replay, atau pencabutan gagal.
-- [ ] Putus sesi, lock/background, dan perubahan monitor tidak meninggalkan input tertahan atau klik salah pada gambar basi.
+- [ ] Putus sesi, HP lock/background, dan perubahan monitor tidak meninggalkan input tertahan atau klik salah pada gambar basi.
+- [ ] Kontrol lock screen sesi aktif dan reconnect tepercaya lulus pada Windows 11 x64 yang diklaim didukung; panel terlarang ditolak di sisi Windows, password tidak disimpan/log/replay, dan ganti pengguna mengakhiri sesi.
 - [ ] Review privasi membuktikan tidak ada pengiriman isi layar/clipboard/ketikan ke pihak luar.
 - [ ] Kebijakan privasi, deklarasi data/izin store, kanal distribusi, keaslian paket, dan informasi dukungan tersedia.
 - [ ] Batas DRM, UAC, jaringan terisolasi, sesi desktop, dan kompatibilitas media disampaikan sebelum pengguna bergantung padanya.
@@ -561,6 +596,9 @@ Penilaian kemungkinan berikut bersifat kualitatif awal, bukan statistik kejadian
 | Risiko | Kemungkinan | Dampak | Mitigasi / validasi |
 |---|---|---|---|
 | Scope besar untuk solo developer | Tinggi | Peluncuran tertunda dan kualitas tak merata | Milestone berurutan; fitur tambahan ditahan; fungsi wajib tetap gate publik |
+| Integrasi lock screen berprivilege belum terbukti | Tinggi | Fitur wajib MVP gagal atau komponen membuka akses berlebih | Studi kelayakan hak minimum, isolasi akun, instalasi/signing, input/capture dan penolakan perintah; jangan melemahkan kebijakan OS |
+| Target media spesifik per tab dan queue lintas browser | Tinggi | Perintah salah sasaran atau klaim dukungan palsu | Buktikan identitas target/capability pada matriks layanan × Chrome/Edge/Firefox dan Spotify desktop; unknown berbeda dari unsupported |
+| Semua monitor beresolusi/DPI beragam | Tinggi | Klik salah dan target delay tidak tercapai | Validasi koordinat desktop gabungan, zoom/pan, batas kapasitas, dan performa; satu monitor tidak mengunci mouse fisik |
 | Android/iOS berbeda dalam izin, keyboard, background, clipboard | Tinggi | Pengalaman tidak konsisten | Uji fisik kedua platform sejak validasi inti; jangan mengandalkan emulator |
 | Screen preview membebani baterai/panas | Sedang–tinggi | Sesi tak nyaman atau aplikasi dihentikan OS | Uji 60 menit dan ukur daya/panas; jangan streaming ketika background atau tidak diminta |
 | Pairing palsu/replay atau pencabutan tak efektif | Perlu diuji | Kontrol komputer dan kebocoran data | SEC-01–SEC-08 menjadi gate, review keamanan sebelum publik |
@@ -578,18 +616,28 @@ Pertanyaan berikut tidak membatalkan keputusan discovery. Tidak ada jawaban yang
 | ID | Hal yang belum pasti | Usulan / cara validasi | Blocker |
 |---|---|---|---|
 | OQ-01 | Pembeda dari aplikasi referensi dan kebutuhan pengguna lain | Wawancara pengguna Remote Mouse/sejenis; validasi dua profil serta alasan berpindah | Sebelum klaim positioning publik |
-| OQ-02 | Makna seluruh ikon media/jendela | Pemilik produk memeragakan aplikasi referensi dan memberi nama aksi; lengkapi checklist | Sebelum pembekuan scope/desain |
-| OQ-03 | Versi minimum Android/iOS/Windows, x64/ARM | Uji kelayakan dan perangkat sasaran; usulan awal Windows 11 x64 | Sebelum komitmen kompatibilitas |
-| OQ-04 | Aplikasi media/browser/peluncur yang dijamin | Tetapkan matriks bernama, termasuk Chrome/Edge dan Netflix/YouTube yang diuji | Sebelum rilis publik |
-| OQ-05 | Persetujuan pasangan baru di Windows dan QR 120 detik | Uji pairing dengan pengguna baru; nilai manfaat keamanan vs langkah tambahan | Sebelum desain pairing final |
-| OQ-06 | Satu sesi aktif, batas lock/background, dan monitor pilihan | Validasi skenario rumah; usulan di FR-03/FR-04 | Sebelum desain sesi final |
-| OQ-07 | Target latensi, keterbacaan, stabilitas dan batas teks 100 KB | Uji prototipe pada perangkat fisik, kalibrasi angka bagian 13 | Sebelum gate rilis disahkan |
-| OQ-08 | Bahasa UI dan aksesibilitas remote desktop | Uji Bahasa Indonesia, font besar, TalkBack/VoiceOver; dokumentasikan batas | Sebelum rilis publik |
+| OQ-02 | Checklist rinci aksi browser/jendela yang masih wajib | Queue desktop, stop, Win+Tab, Win+D sudah dipetakan; dua tombol tidak dikenal sudah ditunda. Verifikasi ikon lain dan daftar shortcut situs tanpa membuka ulang keputusan tersebut | Sebelum desain panel final |
+| OQ-03 | Build Windows 11, konfigurasi minimum dan matriks perangkat | Windows 11 x64, iOS 18+, Android 10+ sudah ditetapkan. Selaraskan target proyek, pilih build OS yang aman/didukung dan siapkan Android fisik serta pemasangan iPhone | Sebelum klaim kompatibilitas |
+| OQ-04 | Capability per layanan/browser dan tipe shortcut | Chrome/Edge/Firefox serta Netflix/YouTube/YouTube Music/Spotify web dan Spotify desktop sudah menjadi sasaran. Buktikan target per tab, queue/stop, perilaku unknown/unsupported dan tipe peluncur yang aman | Sebelum menjanjikan dukungan fitur |
+| OQ-05 | Detail QR/rate limit dan metode uji pairing | Persetujuan pertama, QR 120 detik sekali pakai, serta target 9/10 dalam 2 menit sudah disetujui. Tetapkan pembatalan halaman, kapan token dikonsumsi saat persetujuan tertunda, batas percobaan dan sampel platform | Sebelum desain pairing final |
+| OQ-06 | Kelayakan lock screen, liveness dan transisi tampilan | Aturan satu pengontrol, background, switch user, reconnect tepercaya dan multi-monitor sudah ditetapkan. Buktikan integrasi berprivilege hak minimum, timeout, kebijakan secure attention, perlindungan saat lock/unlock, serta kapasitas monitor | Sebelum desain keamanan/transport final |
+| OQ-07 | Metode pengukuran dan parameter belum disepakati | p95 100/500 ms, reconnect 5 detik, stabilitas 60 menit sudah disetujui. Tetapkan sampel/LAN, keterbacaan/tugas inti, fps/kapasitas monitor, batas clipboard 100 KB dan retensi log 7 hari yang masih usulan | Sebelum gate QA final |
+| OQ-08 | Fallback HP dan validasi aksesibilitas/lokalisasi | Indonesia/Inggris mengikuti OS dengan pilihan manual sudah ditetapkan; fallback Windows Inggris final, fallback HP Inggris masih usulan. Uji dua bahasa, font besar, TalkBack/VoiceOver dan aksesibilitas Windows | Sebelum rilis publik |
 | OQ-09 | Signing, kebijakan privasi, biaya dan kesiapan kanal | Kanal ditetapkan: Google Play, App Store, GitHub Releases untuk Windows. Verifikasi akun, signing, identifier, aturan platform dan biaya; belum ada izin publikasi/pembelian | Sebelum pengumuman rilis |
 | OQ-10 | Definisi 1.000–10.000 pengguna dan arah monetisasi | Tetapkan metrik serta metode ukur yang menjaga privasi; keputusan iklan/freemium terpisah | Bukan blocker MVP gratis |
 
-## 17. Definisi selesai dokumen
+## 17. Handoff keputusan ke studi kelayakan
 
-PRD siap menjadi acuan perencanaan setelah pemilik produk menyetujui usulan batas penting dan menutup blocker scope/kompatibilitas yang relevan. Dokumen ini sudah menyatukan kebutuhan yang diketahui, tetapi belum membuktikan kelayakan teknis, permintaan pasar, performa, keamanan implementasi, atau kelulusan store.
+Keputusan inti discovery sudah dikonsolidasikan pada versi 0.2; ini tidak menandakan seluruh poin 3 TODO, desain teknis, atau QA selesai. Fondasi kode dan hasil uji dasar sudah ada sebagaimana bagian 1.2; belum ada fitur remote yang dinyatakan selesai.
 
-**Status akhir: draf PRD untuk review. Tidak ada kode, arsitektur, jadwal rilis, atau hasil pengujian yang dinyatakan selesai.**
+Urutan berikut merupakan **rekomendasi kerja**, bukan persetujuan implementasi baru:
+
+1. Tuntaskan build APK lokal ketika endpoint resmi dapat diakses; poin 2 TODO tetap terbuka sampai ada bukti.
+2. Prioritaskan studi kelayakan lock screen Windows 11 x64 karena wajib MVP dan berdampak pada privilege, instalasi, signing, identitas akun, serta model sesi.
+3. Buktikan pemilihan target media per tab/aplikasi dan capability queue/stop pada matriks yang dipilih; jangan mengganti target atau fungsi diam-diam.
+4. Validasi desktop gabungan, DPI, input terikat monitor, zoom/pan, dan biaya performa sebelum menetapkan kapasitas.
+5. Gunakan hasil untuk desain keamanan/protokol dan rencana implementasi bertahap. Usulan parameter dapat diajukan dengan alasan dan bukti, bukan pertanyaan tebakan tanpa prototipe.
+
+Kebutuhan pengguna yang sudah ditetapkan tidak dibuka ulang hanya karena implementasinya sulit. Jika fitur wajib terbukti tidak layak, nyatakan blocker dan minta persetujuan perubahan scope; jangan menghapusnya diam-diam.
+
+**Status akhir: siap menjadi input studi kelayakan dan desain berikutnya; belum siap disebut produk selesai atau merge `master`.**

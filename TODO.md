@@ -1,6 +1,6 @@
 # TODO — No Mouse
 
-Pembaruan: 24 November 2026. Snapshot implementasi: `c472014` pada branch `development`, sudah dipush ke `origin/development`.
+Pembaruan: 25 November 2026. Source fondasi: `c472014`; keputusan discovery sampai `c2ab7d8` sudah dipush ke `development`. PRD v0.2 mengonsolidasikan keputusan berikutnya tanpa mengubah kode atau bukti QA.
 
 **Status: fondasi tersedia, fitur remote belum dibuat, QA menyeluruh belum lulus. Jangan merge ke `master`.**
 
@@ -54,18 +54,50 @@ Pembaruan: 24 November 2026. Snapshot implementasi: `c472014` pada branch `devel
 - [x] Build iOS Simulator tanpa signing lulus di macOS CI. **Bukan QA runtime iPhone.**
 - [x] Laporan [QA fondasi](docs/qa/foundation.md) diperbarui dengan tautan run, hasil lokal, serta blocker Android `storage.googleapis.com`. Poin 2 belum selesai seluruhnya sampai APK lokal berhasil dibangun.
 
-## 3. Keputusan produk yang perlu ditutup
+## 3. Keputusan produk, desain terbuka, dan validasi
 
-Lihat OQ-01–OQ-10 pada PRD untuk alasan dan metode validasi. Berikut belum merupakan keputusan final.
+**Keputusan inti discovery sudah tercatat; poin 3 belum seluruhnya selesai.** Centang bagian 3.1 berarti keputusan ditutup, bukan kode/QA lulus. Referensi detail: PRD bagian 4, FR-01–FR-10, bagian 13 dan OQ-01–OQ-10.
 
-- [ ] Validasi masalah, dua profil pengguna, dan alasan memilih No Mouse dibanding aplikasi sejenis.
-- [ ] Lengkapi checklist seluruh aksi referensi wajib. Yang sudah dikonfirmasi: queue tampil melalui pemutar di komputer, stop, Task View (Win+Tab), dan tampil/sembunyikan desktop (Win+D). X merah panel media serta tombol paling kanan `key-panel-2.jpg` ditunda dari MVP atas keputusan pengguna 25 November 2026; tidak perlu ditebak atau menjadi blocker MVP.
-- [ ] Lengkapi baseline OS: **Windows 11 x64 saja sudah ditetapkan** untuk rilis pertama (25 November 2026); Windows 10/ARM ditunda. Minimum **iOS 18.0** juga sudah ditetapkan; uji pada iPhone XS/iOS 18.7.11 dan iPhone 13/iOS 26.1. Minimum **Android 10 (API 29)** ditetapkan 25 November 2026; belum ada HP Android fisik untuk QA. Versi fitur/build Windows 11, penyelarasan konfigurasi platform, dan bukti kompatibilitas masih perlu dituntaskan.
-- [ ] Lengkapi matriks kompatibilitas: **Chrome, Edge, Firefox** ditetapkan untuk rilis pertama (25 November 2026). Sasaran media: Netflix, YouTube, YouTube Music, Spotify web dan Spotify desktop. Dukungan tiap perintah pada tiap layanan/browser serta daftar peluncur tetap perlu ditetapkan dan diuji; laporan keberhasilan aplikasi referensi bukan bukti No Mouse.
-- [ ] Tuntaskan detail/uji pairing: persetujuan Windows hanya untuk perangkat baru serta QR sekali pakai berlaku 2 menit sudah ditetapkan. Target **9 dari 10 pengguna baru pairing tanpa bantuan dalam ≤2 menit**, setelah aplikasi terpasang dan siap, disetujui 25 November 2026; belum diuji. Pembatalan QR saat halaman ditutup, batas percobaan, dan komposisi peserta uji masih perlu ditetapkan.
-- [ ] Lengkapi detail sesi: satu pengontrol (HP kedua ditolak), HP background/terkunci mengakhiri sesi tetapi menyimpan kepercayaan, Windows terkunci mempertahankan sesi, dan pergantian pengguna mengakhiri sesi sudah ditetapkan. **Kontrol lock screen dan input password manual wajib MVP**, meskipun perlu komponen tambahan/instalasi administrator (25 November 2026). Studi kelayakan hak minimum, perilaku reconnect saat terkunci, monitor pilihan, dan timeout liveness belum selesai; tidak ada bypass atau penyimpanan password.
-- [ ] Kalibrasi metode/sampel dan buktikan kualitas melalui prototipe. Target uji awal disetujui 25 November 2026: **p95 input ≤100 ms, delay layar ≤500 ms, koneksi ulang ≤5 detik** pada LAN sehat. Belum ada hasil performa remote. Uji stabilitas **60 menit penggunaan campuran pada masing-masing platform Android/iOS** juga sudah disetujui: tanpa crash, input tertahan, atau putus/reconnect tak disengaja pada LAN sehat; belum dijalankan. Transisi lock/background/daya dan gangguan jaringan diuji terpisah. Target keterbacaan, kapasitas multi-monitor, serta batas clipboard masih perlu ditetapkan/diuji.
-- [ ] Lengkapi kesiapan UI/distribusi: bahasa HP Indonesia/Inggris mengikuti sistem dengan pilihan manual sudah ditetapkan. Kanal rilis ditetapkan: **Google Play, App Store, GitHub Releases untuk Windows** (25 November 2026). Bahasa Windows/fallback, aksesibilitas, akun/biaya, signing, identifier final, dan kebijakan privasi masih perlu dituntaskan; keputusan kanal bukan izin publikasi atau pembelian.
+### 3.1 Keputusan final dari pengguna
+
+- [x] Windows 11 x64; Android 10/API 29+; iOS 18.0+. Windows 10/ARM, macOS/Linux dan OS HP lebih lama ditunda.
+- [x] LAN saja, pairing QR 120 detik sekali pakai; persetujuan Windows hanya untuk pasangan baru; kepercayaan sampai dicabut.
+- [x] Satu HP mengontrol komputer; koneksi kedua ditolak sampai sesi pertama berakhir. HP lock/background mengakhiri sesi tanpa menghapus kepercayaan.
+- [x] Windows lock mempertahankan sesi; HP tepercaya boleh reconnect jika tidak sibuk. Ganti pengguna mengakhiri sesi. Kontrol lock screen/password manual **wajib MVP**, komponen tambahan dapat diperlukan; bukan bypass atau penyimpanan password.
+- [x] Saat Windows terkunci: hanya mouse, keyboard login dan tampilan lock screen manual; Browser, Media/volume, Aplikasi, clipboard serta daya nonaktif.
+- [x] Touchpad dan sentuh langsung; pilih satu atau semua monitor. Semua monitor berupa desktop gabungan sesuai susunan Windows, zoom/pan wajib; gerak remote mode satu monitor dibatasi monitor pilihan tanpa mengunci mouse fisik.
+- [x] Tampilan layar diaktifkan manual, termasuk setelah reconnect.
+- [x] Chrome, Edge, Firefox; sasaran media Netflix, YouTube, YouTube Music, Spotify web/desktop. Target dipilih di HP dan tetap selama sesi; volume mengatur Windows. Tombol tak didukung nonaktif dengan alasan jelas, tanpa mengganti aksi diam-diam.
+- [x] Queue tampil di pemutar komputer, stop, Win+Tab dan Win+D terkonfirmasi. X merah media dan tombol paling kanan `key-panel-2.jpg` ditunda dari MVP. Laporan kompatibilitas aplikasi referensi bukan hasil uji No Mouse.
+- [x] Aplikasi berjalan ditampilkan per jendela dengan nama/judul. Shortcut pilihan diatur di Windows dan dijalankan HP, bukan path/perintah bebas.
+- [x] Clipboard teks manual dua arah tanpa paste/Enter otomatis; kontrol daya memerlukan konfirmasi. Keduanya hanya saat Windows terbuka.
+- [x] HP dan Windows mendukung Indonesia/Inggris mengikuti OS dengan override manual lokal. Fallback Windows Inggris; fallback HP masih usulan.
+- [x] Google Play, App Store, GitHub Releases Windows. Akun Apple Developer Program/Google Play Console belum tersedia; keputusan kanal bukan izin pembelian atau publikasi.
+- [x] Tanpa analytics/crash upload otomatis; diagnosis lokal tanpa konten sensitif, pembagian laporan eksplisit.
+- [x] Target uji LAN sehat: p95 input ≤100 ms, delay layar ≤500 ms, reconnect ≤5 detik; stabilitas 60 menit per Android/iOS; pairing tanpa bantuan 9/10 pengguna dalam ≤2 menit setelah instalasi. **Belum ada hasil uji fitur remote.**
+
+### 3.2 Studi kelayakan dan desain — belum selesai
+
+- [ ] **Prioritas pertama: lock screen Windows 11 x64.** Buktikan jalur input/capture berizin dengan hak minimum, isolasi akun, instalasi/signing, kebijakan secure attention, dan penolakan panel terlarang. Jangan menganggap tray atau Run as administrator cukup.
+- [ ] Buktikan pemilihan target media spesifik, termasuk beberapa tab browser, queue/stop, serta identitas target setelah ditutup/dibuka ulang; buat matriks kemampuan, unknown, unsupported, dan error sementara.
+- [ ] Buktikan desktop gabungan, koordinat negatif/celah antar monitor, DPI/resolusi berbeda, hotplug, batas gerak remote dan interaksi mouse fisik; tentukan kapasitas/performa dengan bukti.
+- [ ] Desain keamanan pairing/protokol: identitas kedua pihak, replay, rate limit, pencabutan, penyimpanan kredensial, kapan token QR dikonsumsi, serta pembatalan halaman. Durasi QR/persetujuan pertama tidak perlu ditanyakan ulang.
+- [ ] Tetapkan timeout liveness, perpindahan capture saat lock/unlock, apakah aktivasi layar perlu diulang saat lock tanpa reconnect, dan batas satu komputer aktif per HP yang masih usulan.
+- [ ] Selaraskan minSdk Android/iOS deployment target serta target Windows dengan keputusan produk; pilih build Windows 11 yang aman/didukung. Konfigurasi proyek belum dinyatakan berubah hanya karena PRD diperbarui.
+- [ ] Lengkapi aksi browser/jendela referensi yang belum jelas, shortcut situs bawaan, dan tipe aplikasi Windows yang dapat didaftarkan. Jangan menghidupkan kembali dua tombol yang sudah ditunda.
+- [ ] Tetapkan parameter usulan lewat bukti: batas clipboard 100 KB, log 7 hari/batas ukuran, fallback HP Inggris, fps, kondisi LAN/sampel, keterbacaan dan target tugas inti.
+
+### 3.3 Validasi pengguna, perangkat, dan distribusi — belum selesai
+
+- [ ] Wawancara calon pengguna untuk masalah, dua profil, pembeda, dan alasan berpindah; pengalaman pribadi belum bukti pasar.
+- [ ] Siapkan pengujian iPhone XS/iOS 18.7.11 dan iPhone 13/iOS 26.1; catat versi aktual. Belum ada HP Android fisik; siapkan pinjaman/penguji beta berizin, bukan menganggap emulator cukup.
+- [ ] Uji target pairing, latensi, stabilitas, keterbacaan dan pemulihan di perangkat nyata setelah fitur ada; pisahkan uji gangguan dari sesi LAN sehat.
+- [ ] Uji lokalisasi dua bahasa, font besar, TalkBack/VoiceOver dan aksesibilitas Windows; tulis batas aksesibilitas desktop remote.
+- [ ] Siapkan akun developer, biaya, identifier final, signing, kebijakan privasi dan disclosure izin/komponen privilege dengan persetujuan pengguna terpisah.
+
+### 3.4 Urutan kerja yang direkomendasikan
+
+Tuntaskan blocker build lokal poin 2 saat koneksi memungkinkan. Untuk desain berikutnya, dahulukan studi kelayakan lock screen, lalu media/browser dan multi-monitor; gunakan hasil untuk desain keamanan dan rencana implementasi. Belum ada izin baru untuk memasang komponen privilege, membeli layanan, atau mengubah gate `master`.
 
 ## 4. Fitur MVP yang belum dibuat
 
@@ -84,16 +116,17 @@ Tidak ada endpoint/listener remote, pairing, atau kendali OS pada fondasi saat i
 
 - [ ] Touchpad: gerak, klik kiri/kanan/tengah, klik ganda, drag, scroll vertikal/horizontal.
 - [ ] Sentuh langsung pada gambar desktop dengan pemetaan koordinat yang benar.
-- [ ] Penanganan resolusi, DPI, monitor, perubahan viewport, serta penolakan klik pada gambar basi.
+- [ ] Pilih satu/semua monitor, desktop gabungan sesuai susunan Windows, zoom/pan, batas gerak remote monitor pilihan, serta penanganan DPI/hotplug/gambar basi.
 - [ ] Keyboard teks, Unicode/komposisi yang didukung, navigasi, F1–F12, numpad, dan shortcut modifier.
 - [ ] Pelepasan input/modifier saat sesi putus, mode berubah, atau aplikasi berhenti aktif.
-- [ ] Tampilan layar dan kursor aktual yang cukup terbaca; aktif/nonaktif eksplisit dan status terpisah dari input.
-- [ ] Penanganan capture gagal, DRM, serta batas UAC/secure desktop tanpa bypass.
+- [ ] Tampilan layar dan kursor aktual yang cukup terbaca; aktif/nonaktif eksplisit, aktivasi ulang manual setelah reconnect, dan status terpisah dari input.
+- [ ] Penanganan capture gagal/DRM dan batas UAC tanpa bypass; kontrol lock screen sesi aktif wajib melalui jalur berizin, bukan dikecualikan diam-diam.
+- [ ] Reconnect hanya perangkat tepercaya saat Windows terkunci, input password manual tanpa penyimpanan/log/replay, serta penolakan panel terlarang di sisi Windows.
 
 ### Panel fungsi — FR-07, FR-08, FR-09
 
-- [ ] Media dan volume, dengan target serta matriks kompatibilitas jelas.
-- [ ] Akses/pindah aplikasi dan kontrol jendela sesuai inventaris referensi terkonfirmasi.
+- [ ] Media dengan pilihan target persisten per sesi, capability/error jelas, dan volume Windows; Browser/Media nonaktif saat lock.
+- [ ] Akses/pindah per jendela dan shortcut yang diatur Windows; panel Aplikasi nonaktif saat lock.
 - [ ] Browser: navigasi, tab/jendela, zoom, home, refresh, dan shortcut situs bawaan.
 - [ ] Clipboard teks HP ke Windows dan sebaliknya atas tindakan eksplisit, tanpa paste/Enter otomatis.
 - [ ] Penanganan clipboard kosong, nonteks, Unicode, ukuran berlebih, izin ditolak, dan hasil transfer belum diketahui.
@@ -105,7 +138,8 @@ Tidak ada endpoint/listener remote, pairing, atau kendali OS pada fondasi saat i
 - [ ] Reconnect tanpa replay klik/ketikan/clipboard/perintah daya lama.
 - [ ] Input tertahan dilepas, gambar basi ditandai, dan sentuh langsung diblokir sampai aman.
 - [ ] Validasi batas data/perintah, penolakan pasangan asing, replay, dan identitas palsu.
-- [ ] Privasi layar/clipboard, log tersanitasi, izin minimum, tanpa telemetry konten sensitif.
+- [ ] Privasi layar/clipboard, log lokal tersanitasi, izin minimum, tanpa analytics/crash upload otomatis; ekspor diagnosis atas tindakan eksplisit.
+- [ ] Lokalisasi Indonesia/Inggris mobile/Windows dengan ikuti OS, override manual tersimpan dan fallback sesuai keputusan.
 - [ ] Kebijakan privasi, retensi data lokal, keaslian paket, dan distribusi resmi.
 
 ## 5. QA perangkat nyata dan gate rilis
