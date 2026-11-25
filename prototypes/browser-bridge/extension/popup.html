@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>No Mouse Probe</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font: 14px system-ui; margin: 16px; width: 300px; }
+    button { font: inherit; margin-block: 4px; padding: 8px; }
+    li { margin-block: 8px; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body>
+  <h1>No Mouse Probe</h1>
+  <p>Baca-saja. Tidak mengontrol playback.</p>
+  <p id="status" role="status">Memeriksa koneksi…</p>
+  <button id="connect">Hubungkan host uji</button>
+  <button id="enroll">Izinkan YouTube dan daftarkan tab aktif</button>
+  <button id="revoke">Cabut izin YouTube</button>
+  <ul id="targets" aria-label="Tab terdaftar"></ul>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

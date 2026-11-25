@@ -67,6 +67,25 @@ jobs:
       - run: dotnet restore apps/windows/NoMouse.Windows.csproj
       - run: dotnet format apps/windows/NoMouse.Windows.csproj --verify-no-changes --no-restore
       - run: dotnet build apps/windows/NoMouse.Windows.csproj --configuration Release --no-restore
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22.20.0'
+      - run: dotnet build prototypes/browser-bridge/host --configuration Release
+      - run: dotnet format prototypes/browser-bridge/host/NoMouse.BrowserBridge.Host.csproj --verify-no-changes --no-restore
+      - run: node --test prototypes/browser-bridge/test/host.test.mjs
+
+  browser-bridge:
+    name: Read-only browser bridge checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22.20.0'
+      - run: node --test prototypes/browser-bridge/extension/test/*.test.mjs
 
   ios:
     name: iOS Simulator build (not physical iPhone QA)

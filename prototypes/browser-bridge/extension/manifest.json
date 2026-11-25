@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "No Mouse Browser Bridge Probe",
+  "version": "0.1.0",
+  "description": "Read-only explicit YouTube tab enrollment prototype. No playback control.",
+  "permissions": ["nativeMessaging", "storage", "scripting"],
+  "optional_host_permissions": ["https://www.youtube.com/*"],
+  "incognito": "not_allowed",
+  "background": { "service_worker": "worker.js", "type": "module" },
+  "action": { "default_popup": "popup.html" },
+  "content_security_policy": { "extension_pages": "script-src 'self'; object-src 'none'" }
+}
