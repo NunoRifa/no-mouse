@@ -252,7 +252,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 
 ### FR-08 — Clipboard teks dua arah
 
-- Transfer hanya setelah pengguna memilih **Kirim Teks ke Komputer** atau **Ambil Teks dari Komputer**. Izin clipboard mengikuti aturan Android/iOS yang berlaku.
+- Keputusan pengguna 25 November 2026: MVP hanya menyediakan **clipboard teks manual dua arah**, tanpa sinkronisasi otomatis dan tanpa transfer gambar/file. Transfer hanya setelah pengguna memilih **Kirim Teks ke Komputer** atau **Ambil Teks dari Komputer**. Tidak ada paste atau Enter otomatis; pengguna melakukan paste secara terpisah. Izin clipboard mengikuti aturan Android/iOS yang berlaku.
 - Pengguna diberi tahu bahwa clipboard tujuan akan diganti. Jangan tampilkan seluruh teks sensitif sebagai preview otomatis.
 - Mengirim ke komputer mengganti clipboard saja, tidak otomatis paste atau menekan Enter. Mengambil dari komputer mengganti clipboard HP sesuai izin OS.
 - Usulan batas 100 KB teks UTF-8 per transfer. Teks kosong, format nonteks, dan ukuran berlebih menghasilkan pesan jelas tanpa menimpa clipboard tujuan.
