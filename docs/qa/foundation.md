@@ -1,12 +1,20 @@
 # QA Fondasi No Mouse
 
-Pembaruan: 24 November 2026. Branch: `development`. Source fondasi: `c472014`; snapshot CI terbaru yang diperiksa: `21b10d9`.
+Pembaruan: 25 November 2026. Branch: `development`. Source fondasi: `c472014`; CI terbaru yang diperiksa: `57d5254`, run `45562778900` success. Diagnosis kegagalan lama tetap dicatat sebagai riwayat, bukan blocker build lokal saat ini.
 
 ## Kesimpulan
 
-**CI tiga platform lulus. Build dan startup WPF lokal lulus. Build APK lokal masih gagal karena timeout unduhan artefak Flutter dari `storage.googleapis.com`. QA perangkat mobile nyata dan QA rilis produk belum dilakukan; jangan merge ke `master`.**
+**Poin 2 verifikasi fondasi selesai berdasarkan bukti yang dicatat: CI success, build/startup WPF lokal lulus, dan pengguna berhasil membangun APK debug lokal. Artefak APK diverifikasi ada beserta checksum; build Android tidak diulang oleh agent pada pembaruan ini. QA perangkat mobile nyata dan QA rilis produk belum dilakukan; jangan merge ke `master`.**
 
 Fitur remote belum dibuat. Kelulusan fondasi tidak berarti pairing, keamanan sesi, kontrol OS, atau seluruh kebutuhan PRD sudah diuji.
+
+## Penyelesaian build Android lokal — 25 November 2026
+
+Pengguna menjalankan `flutter build apk --debug --no-pub` pada `apps/mobile` dan memberikan hasil `Built build\\app\\outputs\\flutter-apk\\app-debug.apk`, durasi Gradle 431,4 detik. Pemeriksaan filesystem mengonfirmasi APK **150.360.214 byte**, SHA-256 `4dd6028772dfee908cc97f281ffbf1dbdd90d1dd7390b27d621a42f56a3decd0`.
+
+Warning SDK XML versi 3/4 masih muncul tetapi **tidak menggagalkan build ini**. Keselarasan command-line tools dapat dirawat terpisah; jangan menurunkan versi dependency atau mengubah source hanya untuk menghilangkan warning tanpa diagnosis.
+
+CI terbaru [45562778900](https://github.com/NunoRifa/no-mouse/actions/runs/45562778900), commit `57d5254663617de9f2233429496bdd1fbe06425d`, dikonfirmasi API sebagai `completed / success`. Run sebelumnya `45552107150` memang gagal Android; keberhasilan lokal dan run terbaru tidak mengubah fakta riwayat tersebut. Akar kegagalan CI lama belum ditetapkan karena log lengkap belum dapat diakses.
 
 ## Bukti CI remote
 
@@ -33,7 +41,7 @@ Run tersebut membuktikan kompatibilitas toolchain pada image runner yang dipakai
 | Flutter widget GREEN | Lulus 2/2 pada fondasi | `flutter test --no-pub`: empty state jujur; viewport 320×640 dengan teks 2x tanpa exception; CI snapshot sama juga lulus |
 | Format Dart / analisis Flutter | Lulus pada fondasi dan CI | Format 2 files, 0 changed; `flutter analyze --no-pub`: No issues found |
 | Lisensi Android | Selesai dan dikonfirmasi toolchain | Pengguna menjalankan `flutter doctor --android-licenses`; pemeriksaan ulang `flutter doctor -v` menampilkan Android toolchain bertanda lulus, build-tools 36.0.0, dan `All Android licenses accepted.` Pemeriksaan doctor keseluruhan belum dijadikan bukti lulus semua platform |
-| Build Android debug lokal | Gagal, blocker jaringan | `flutter build apk --debug --no-pub` gagal di `:app:mergeDebugAssets`: empat artefak engine `io.flutter` dari `storage.googleapis.com/download.flutter.io` mengalami `Read timed out`, termasuk retry bawaan Flutter. Pemeriksaan URL POM embedding memakai curl juga timeout setelah 25 detik tanpa data. Build-tools 36.0.0 berhasil dipasang; bukan kegagalan lisensi |
+| Build Android debug lokal — percobaan awal | Riwayat gagal; percobaan pengguna kini lulus (lihat bagian penyelesaian) | `flutter build apk --debug --no-pub` gagal di `:app:mergeDebugAssets`: empat artefak engine `io.flutter` dari `storage.googleapis.com/download.flutter.io` mengalami `Read timed out`, termasuk retry bawaan Flutter. Pemeriksaan URL POM embedding memakai curl juga timeout setelah 25 detik tanpa data. Build-tools 36.0.0 berhasil dipasang; bukan kegagalan lisensi |
 | SDK .NET 10.0.404 | Terpasang dan diverifikasi | Arsip resmi lengkap diverifikasi SHA-512 sebelum ekstraksi ke `%USERPROFILE%\.dotnet\no-mouse-10.0.404`; `dotnet --version` menghasilkan `10.0.404` |
 | Restore WPF | Lulus | `dotnet restore apps/windows/NoMouse.Windows.csproj` menggunakan SDK lokal terkunci |
 | Format WPF | Lulus | `dotnet format apps/windows/NoMouse.Windows.csproj --verify-no-changes --no-restore` exit 0 |
@@ -76,7 +84,7 @@ SDK ditempatkan di folder pengguna, bukan repository, dan PATH mesin tidak diuba
 
 ## Tindak lanjut
 
-1. Pulihkan akses lokal ke `storage.googleapis.com/download.flutter.io` melalui diagnosis koneksi/proxy yang disetujui pengguna, lalu ulangi build APK satu proses. Jangan mengganti mirror sembarang, menonaktifkan TLS, atau mengklaim CI hijau menyelesaikan blocker lokal. Ada peringatan SDK XML versi 3/4 pada log; evaluasi keselarasan command-line tools bila masih muncul setelah jaringan pulih, tanpa menganggapnya penyebab timeout.
+1. Build APK lokal sudah berhasil berdasarkan log pengguna dan pemeriksaan artefak; tidak perlu retry jaringan berulang. Jika warning SDK XML hendak dibersihkan, evaluasi keselarasan tools sebagai pemeliharaan terpisah, bukan blocker build saat ini.
 2. Perbarui TODO berdasarkan bukti di atas; commit/push hanya `development`.
 3. Siapkan akses Mac sementara atau jalur signing/TestFlight dengan persetujuan terpisah sebelum QA iPhone nyata.
 4. Tutup keputusan produk dan implementasikan fitur melalui tahap berikutnya; tidak menyatakan produk selesai berdasarkan CI fondasi.

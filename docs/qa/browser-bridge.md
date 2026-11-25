@@ -16,6 +16,7 @@ Tanggal: 25 November 2026. Branch: `development`. Scope: source/tests Chrome rea
 | Review independen dan regresi tambahan | Dua temuan lifecycle diverifikasi RED/GREEN: navigasi saat permission check tertunda tidak boleh mendaftarkan dokumen pengganti; snapshot host yang masih in-flight setelah target lokal dihapus tidak boleh memutus target lain. Ticket dibuat sebelum await, popup memantau navigasi selama grant, dan respons divalidasi terhadap state saat request dikirim tanpa memulihkan target yang dilepas |
 | JS syntax worker/popup/content | Lulus `node --check` |
 | CI remote commit `2dd4c1f` | [Run 45552107150](https://github.com/NunoRifa/no-mouse/actions/runs/45552107150): browser bridge checks **success**, Windows termasuk host checks **success**, iOS Simulator **success**. Android gagal pada `flutter build apk --debug --no-pub`; keseluruhan run **failure**. Endpoint unduh log merespons HTTP 403 tanpa autentikasi; anotasi publik hanya exit code 1, sehingga penyebab Android belum dapat ditetapkan |
+| CI terbaru `57d5254` | [Run 45562778900](https://github.com/NunoRifa/no-mouse/actions/runs/45562778900) diperiksa API: completed/success. Kode prototipe tidak berubah sejak run sebelumnya. Keberhasilan run ini tidak membuktikan akar gagal Android lama |
 | Browser aktual/permission/native messaging | **Belum diuji**; membutuhkan persetujuan profil uji, ID extension, binary/config path dan registrasi HKCU yang nyata |
 | Playback/queue, HP/LAN, Edge/Firefox, lock screen | Di luar prototipe ini dan tidak dinyatakan lulus |
 

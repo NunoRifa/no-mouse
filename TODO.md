@@ -47,12 +47,12 @@ Pembaruan: 25 November 2026. Source fondasi: `c472014`; keputusan discovery samp
 - [x] Periksa CI `c472014` dan `21b10d9`: keduanya success. [Run 45132269694](https://github.com/NunoRifa/no-mouse/actions/runs/45132269694) diverifikasi per job/step: Android, Windows, iOS Simulator lulus. Versi tepat Xcode tidak dikutip tanpa membaca log; kompatibilitas hanya dibuktikan untuk runner yang dipakai.
 - [x] Endpoint Maven yang sebelumnya gagal kembali HTTP 200; build lokal melewati kendala Kotlin sebelumnya. Blocker unduhan berikutnya ada pada `storage.googleapis.com`, bukan lisensi/Maven.
 - [x] Lisensi Android diterima sendiri oleh pengguna: output `All SDK package licenses accepted.`
-- [ ] Selesaikan build APK debug lokal: percobaan terbaru gagal `:app:mergeDebugAssets` karena artefak engine Flutter dari `storage.googleapis.com` mengalami `Read timed out`. Diagnosis 24 November: TCP/TLS berhasil tetapi HTTP tidak membalas, termasuk IPv4 eksplisit; tidak ada proxy aktif. Alias yang gagal sertifikat tidak dipakai. Perlu uji jalur koneksi lain/hotspot oleh pengguna sebelum retry build; CI Android tetap lulus.
+- [x] Build APK debug lokal berhasil: pengguna menjalankan `flutter build apk --debug --no-pub`, Gradle 431,4 detik, menghasilkan `app-debug.apk`. Artefak diperiksa ada (150.360.214 byte), checksum dicatat di QA. Warning SDK XML tidak menggagalkan build. Tidak mengklaim agent menjalankan ulang build atau jaringan selalu sehat.
 - [x] SDK .NET 10.0.404 terpasang lokal setelah SHA-512 arsip resmi cocok; PATH mesin tidak diubah.
 - [x] Restore, format check, build WPF Release lokal lulus: 0 warning, 0 error; SDK tetap .NET 10 sesuai `global.json`.
 - [x] Aplikasi WPF asli dibuka, ketiga teks status diverifikasi melalui UI Automation, lalu jendela ditutup.
 - [x] Build iOS Simulator tanpa signing lulus di macOS CI. **Bukan QA runtime iPhone.**
-- [x] Laporan [QA fondasi](docs/qa/foundation.md) diperbarui dengan tautan run, hasil lokal, serta blocker Android `storage.googleapis.com`. Poin 2 belum selesai seluruhnya sampai APK lokal berhasil dibangun.
+- [x] Laporan [QA fondasi](docs/qa/foundation.md) diperbarui dengan tautan run, hasil lokal, serta blocker Android `storage.googleapis.com`. **Poin 2 selesai** setelah bukti build lokal pengguna dan CI terbaru `57d5254` success dicatat; bukan kelulusan QA rilis/perangkat nyata.
 
 ## 3. Keputusan produk, desain terbuka, dan validasi
 
@@ -85,7 +85,7 @@ Pembaruan: 25 November 2026. Source fondasi: `c472014`; keputusan discovery samp
 - [x] Fixture dua tab YouTube Chrome diuji baca-saja, sebelum/sesudah ditukar: tetap satu sesi Playing. Dengan izin pengguna, sumber dibaca `Chrome`; versi binary terpasang 158.0.8127.88, bukan bukti versi proses aktif. Tidak ada pembeda per-tab/command atau metadata video dibaca.
 - [x] Pendekatan **hybrid extension browser + native messaging + GSMTC** dan [desain teknis](docs/superpowers/specs/2026-11-25-browser-bridge-design.md) sudah disetujui pengguna. Prototipe pertama Chrome read-only, enrollment eksplisit dan host user-mode; tanpa playback/LAN/service/all-sites.
 - [x] [Rencana Native](docs/superpowers/plans/2026-11-25-browser-bridge.md) disetujui; source prototipe read-only tersedia di `prototypes/browser-bridge`. Tes otomatis: 11 host process + 13 extension state/worker lulus; build/format/publish host lokal lulus. [QA prototipe](docs/qa/browser-bridge.md) memisahkan hasil otomatis dari uji browser nyata.
-- [ ] Pemasangan/uji Chrome end-to-end belum dilakukan. Perlu izin spesifik untuk profil uji terpisah, ID extension, binary/config path dan registrasi host HKCU; tidak ada instalasi otomatis. CI commit `2dd4c1f`: job bridge/Windows/iOS lulus, Android build gagal; keseluruhan run belum hijau. Log Android membutuhkan akses autentikasi (HTTP 403), anotasi publik hanya exit code 1.
+- [ ] Pemasangan/uji Chrome end-to-end belum dilakukan. Perlu izin spesifik untuk profil uji terpisah, ID extension, binary/config path dan registrasi host HKCU; tidak ada instalasi otomatis. Riwayat CI `2dd4c1f` gagal Android, bridge/Windows/iOS lulus. CI berikut `57d5254` [45562778900](https://github.com/NunoRifa/no-mouse/actions/runs/45562778900) kini completed/success; penyebab run lama belum ditetapkan, tidak menganggapnya sama dengan warning SDK lokal.
 - [ ] Buktikan identitas dua tab dan lifecycle lewat prototipe, lalu capability playback/site adapter/queue per layanan serta Edge/Firefox pada tahap berikut. Queue/stop belum terbukti No Mouse; queue Netflix referensi belum dikonfirmasi.
 - [ ] Buktikan desktop gabungan, koordinat negatif/celah antar monitor, DPI/resolusi berbeda, hotplug, batas gerak remote dan interaksi mouse fisik; tentukan kapasitas/performa dengan bukti.
 - [ ] Desain keamanan pairing/protokol: identitas kedua pihak, replay, rate limit, pencabutan, penyimpanan kredensial, kapan token QR dikonsumsi, serta pembatalan halaman. Durasi QR/persetujuan pertama tidak perlu ditanyakan ulang.
@@ -104,7 +104,7 @@ Pembaruan: 25 November 2026. Source fondasi: `c472014`; keputusan discovery samp
 
 ### 3.4 Urutan kerja yang direkomendasikan
 
-Tuntaskan blocker build APK lokal poin 2 saat endpoint resmi dapat diakses. Studi dokumentasi lock screen dan media/browser tersedia, tetapi belum membuktikan runtime; berikutnya rancang spike lokal lock screen yang aman, lalu jalankan hanya setelah target mesin uji, privilege, dan pemulihan disetujui. Studi media berikutnya bersifat read-only/local sesuai `docs/feasibility/media-browser.md`. Belum ada izin baru untuk memasang service/extension berprivilege, membeli layanan, atau mengubah gate `master`.
+Poin 2 verifikasi fondasi selesai berdasarkan build APK lokal pengguna dan CI success; lanjut uji browser bridge nyata hanya setelah izin pemasangan spesifik, bukan mengulang blocker unduhan lama. Studi dokumentasi lock screen dan media/browser tersedia, tetapi belum membuktikan runtime; berikutnya rancang spike lokal lock screen yang aman, lalu jalankan hanya setelah target mesin uji, privilege, dan pemulihan disetujui. Studi media berikutnya bersifat read-only/local sesuai `docs/feasibility/media-browser.md`. Belum ada izin baru untuk memasang service/extension berprivilege, membeli layanan, atau mengubah gate `master`.
 
 ## 4. Fitur MVP yang belum dibuat
 

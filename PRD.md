@@ -28,7 +28,7 @@ Dokumen ini menggabungkan discovery, dua profil pengguna, delapan user story, pr
 
 - Fondasi Flutter/WPF dan CI sudah tersedia; fitur remote belum dibuat. Riwayat scope fondasi terpisah dari kebutuhan produk terbaru.
 - Bukti QA tersedia di [docs/qa/foundation.md](docs/qa/foundation.md): tiga job CI pada snapshot `21b10d9` lulus, build/startup WPF lokal lulus, dan tes widget mobile 2/2 lulus. Ini bukti fondasi, bukan hasil pairing, lock screen, media, multi-monitor, atau performa remote.
-- Build APK lokal terakhir masih terblokir akses artefak Flutter; pengujian iPhone/Android fisik belum dilakukan. Status pengerjaan aktif: [TODO.md](TODO.md).
+- Build APK debug lokal berhasil berdasarkan log pengguna dan pemeriksaan artefak pada 25 November 2026; CI terbaru `57d5254` juga success. Prototipe browser bridge source/tests tersedia terpisah, belum dipasang/diuji di browser nyata. Pengujian iPhone/Android fisik belum dilakukan. Status pengerjaan aktif: [TODO.md](TODO.md).
 - Persetujuan kebutuhan atau kanal distribusi tidak memberi izin pembelian, publikasi, pemasangan komponen berprivilege tertentu, atau merge `master` sebelum gate QA rilis lulus.
 
 ## 2. Masalah dan bukti
@@ -632,7 +632,7 @@ Keputusan inti discovery sudah dikonsolidasikan pada versi 0.2; ini tidak menand
 
 Urutan berikut merupakan **rekomendasi kerja**, bukan persetujuan implementasi baru:
 
-1. Tuntaskan build APK lokal ketika endpoint resmi dapat diakses; poin 2 TODO tetap terbuka sampai ada bukti.
+1. Verifikasi fondasi poin 2 TODO sudah memiliki bukti build APK lokal pengguna dan CI success; lanjut QA produk/prototipe tanpa mengulang blocker jaringan lama sebagai syarat terbuka.
 2. Prioritaskan studi kelayakan lock screen Windows 11 x64 karena wajib MVP dan berdampak pada privilege, instalasi, signing, identitas akun, serta model sesi.
 3. Buktikan pemilihan target media per tab/aplikasi dan capability queue/stop pada matriks yang dipilih; jangan mengganti target atau fungsi diam-diam.
 4. Validasi desktop gabungan, DPI, input terikat monitor, zoom/pan, dan biaya performa sebelum menetapkan kapasitas.
