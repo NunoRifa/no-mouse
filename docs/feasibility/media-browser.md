@@ -163,7 +163,13 @@ Probe dijalankan 25 November 2026 melalui Windows PowerShell dan proyeksi WinRT 
 
 Langkah berikut membutuhkan fixture media nonpribadi yang jelas: pengguna menyiapkan media uji pada dua tab browser yang disebutkan dan, jika tersedia, Spotify desktop. Enumerasi anonim dapat diulang saat pengguna mengubah target secara manual untuk mengamati jumlah/capability tanpa membaca judul/URL. Sebelum mengirim pause/stop/next, minta izin tahap transport dan pilih target yang tidak ambigu; jangan mengontrol sesi personal yang kebetulan sedang aktif.
 
-**Status kini: akses API lokal baca-saja terbukti; kompatibilitas per-target dan integrasi produk belum terbukti. Queue/cross-browser tetap terbuka.**
+### 9.1 Fixture dua tab YouTube di Chrome
+
+Pengguna mengonfirmasi dua tab YouTube disiapkan, salah satunya paused. Enumerasi anonim diulang 25 November 2026: `GetSessions()` hanya mengembalikan **1 sesi**, status `Playing`, Play false, Pause true, Stop true, Next false, Previous false. Tidak membaca judul/URL/source ID dan tidak mengirim command.
+
+Hasil ini **tidak membuktikan dua tab dapat dipilih secara independen melalui GSMTC** pada konfigurasi uji tersebut. Tidak boleh memunculkan dua target HP berdasarkan dua tab yang dilaporkan pengguna bila API hanya memberikan satu sesi. Karena atribusi sumber sengaja tidak dibaca, jangan menyimpulkan sesi tunggal pasti milik tab tertentu atau bahwa semua versi Chrome selalu menggabungkan tab. Perlu observasi ketika pengguna menukar tab yang playing/paused, versi browser, dan atribusi sumber aplikasi minimum sebelum kesimpulan lebih luas.
+
+**Status kini: akses API lokal baca-saja terbukti; fixture dua tab hanya menghasilkan satu sesi anonim. Pemilihan per-tab, queue, kompatibilitas lintas layanan/browser dan integrasi produk belum terbukti.**
 
 ## Sumber resmi
 
