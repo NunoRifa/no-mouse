@@ -307,7 +307,9 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 | SEC-09 | Tidak ada pengiriman isi layar, ketikan, clipboard, kredensial, atau inventaris aplikasi ke layanan eksternal | Pemeriksaan aliran data dan perilaku jaringan |
 | SEC-10 | Paket rilis berasal dari kanal resmi dan keasliannya dapat diverifikasi; rilis tidak mendistribusikan rahasia bersama | Review distribusi/signing sesuai platform; rincian biaya/kanal TBD |
 
-### 8.3 Data dan retensi — usulan
+### 8.3 Data dan retensi — keputusan dan usulan
+
+Keputusan pengguna 25 November 2026: rilis awal **tanpa analytics dan tanpa pengiriman laporan crash otomatis**. Log diagnosis disimpan lokal, tidak memuat password/kredensial, ketikan, isi layar, clipboard, atau judul jendela. Laporan hanya dibagikan melalui tindakan eksplisit pengguna setelah disanitasi; tidak ada upload background. Keputusan ini mengatur perilaku aplikasi No Mouse dan dependency yang dipilih, bukan jaminan menonaktifkan seluruh telemetry/crash reporting OS atau store di luar kendali aplikasi. Durasi retensi serta batas ukuran log masih usulan, bukan bagian yang otomatis disetujui.
 
 | Data | Penggunaan dan penyimpanan |
 |---|---|
