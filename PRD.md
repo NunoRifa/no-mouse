@@ -228,7 +228,7 @@ Seluruh detail baru pada bagian ini merupakan **usulan perbaikan** kecuali yang 
 
 - Menampilkan monitor pilihan beserta kursor aktual, bukan kursor lokal palsu yang tidak sesuai posisi Windows.
 - Tampilan membantu membaca teks dan memilih objek; audio, kualitas film, dan frame rate tinggi bukan sasaran.
-- Usulan tampilan aktif saat pengguna memilih melihat layar, bukan otomatis ditransmisikan segera setelah pairing. Windows selalu menampilkan indikator ketika sesi/tampilan aktif.
+- Keputusan pengguna 25 November 2026: pengguna harus menekan **Tampilkan layar** terlebih dahulu; tersambung atau selesai pairing tidak otomatis mengirim isi layar komputer. Windows selalu menampilkan indikator ketika sesi/tampilan aktif. Usulan privasi untuk sesi baru setelah reconnect: kembali ke kondisi tampilan mati sampai pengguna mengaktifkannya lagi; perilaku ini belum dikonfirmasi pengguna.
 - Tersedia tindakan hentikan tampilan tanpa mencabut perangkat, serta tindakan hentikan seluruh sesi dari Windows.
 - Bila tampilan gagal tetapi input masih aktif, tampilkan dua status terpisah. Sentuh langsung dinonaktifkan; touchpad boleh dilanjutkan setelah pengguna memahami bahwa layar tidak tersedia.
 - Konten DRM, secure desktop, dan permukaan yang dikecualikan OS mungkin tidak dapat ditampilkan; jangan mencoba melewati perlindungan.
