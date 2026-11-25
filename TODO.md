@@ -80,7 +80,8 @@ Pembaruan: 25 November 2026. Source fondasi: `c472014`; keputusan discovery samp
 
 - [x] Riset dokumentasi awal lock screen selesai: [studi kelayakan](docs/feasibility/windows-lock-screen.md). Tray biasa tidak cukup; Session 0, UIPI dan akses capture secure desktop memiliki batas terpisah. Rekomendasi kandidat broker/helper terisolasi, **bukan bukti runtime atau persetujuan arsitektur**.
 - [ ] **Prioritas pertama: buktikan lock screen Windows 11 x64.** Desain spike lokal terisolasi perlu disetujui sebelum eksekusi/pemasangan komponen privilege; uji input/capture, hak minimum, isolasi akun, IPC, instalasi/signing, secure attention, dan penolakan panel terlarang. Tidak ada service dipasang atau fitur lock screen yang sudah diuji.
-- [ ] Buktikan pemilihan target media spesifik, termasuk beberapa tab browser, queue/stop, serta identitas target setelah ditutup/dibuka ulang; buat matriks kemampuan, unknown, unsupported, dan error sementara.
+- [x] Studi kompatibilitas dokumentasi diselesaikan: [media/browser](docs/feasibility/media-browser.md). Windows GSMTC menyediakan sesi/capability/playback request, tetapi tidak menjamin identitas tab atau queue. Media Session API milik situs bukan kontrol universal bagi desktop. Kandidat pertama GSMTC read-only; **belum ada uji runtime No Mouse atau dukungan layanan terbukti**.
+- [ ] Tahap berikut: studi feasible/read-only GSMTC lokal pada beberapa tab dan Spotify desktop; catat source, capability, privacy dan ambiguitas. Belum memasang ekstensi atau mengirim transport sebelum uji inventory read-only cukup dan izin eksplisit untuk tahap transport. Queue/stop tiap layanan tetap belum dibuktikan; queue Netflix referensi belum dikonfirmasi.
 - [ ] Buktikan desktop gabungan, koordinat negatif/celah antar monitor, DPI/resolusi berbeda, hotplug, batas gerak remote dan interaksi mouse fisik; tentukan kapasitas/performa dengan bukti.
 - [ ] Desain keamanan pairing/protokol: identitas kedua pihak, replay, rate limit, pencabutan, penyimpanan kredensial, kapan token QR dikonsumsi, serta pembatalan halaman. Durasi QR/persetujuan pertama tidak perlu ditanyakan ulang.
 - [ ] Tetapkan timeout liveness, perpindahan capture saat lock/unlock, apakah aktivasi layar perlu diulang saat lock tanpa reconnect, dan batas satu komputer aktif per HP yang masih usulan.
@@ -98,7 +99,7 @@ Pembaruan: 25 November 2026. Source fondasi: `c472014`; keputusan discovery samp
 
 ### 3.4 Urutan kerja yang direkomendasikan
 
-Tuntaskan blocker build lokal poin 2 saat koneksi memungkinkan. Untuk desain berikutnya, dahulukan studi kelayakan lock screen, lalu media/browser dan multi-monitor; gunakan hasil untuk desain keamanan dan rencana implementasi. Belum ada izin baru untuk memasang komponen privilege, membeli layanan, atau mengubah gate `master`.
+Tuntaskan blocker build APK lokal poin 2 saat endpoint resmi dapat diakses. Studi dokumentasi lock screen dan media/browser tersedia, tetapi belum membuktikan runtime; berikutnya rancang spike lokal lock screen yang aman, lalu jalankan hanya setelah target mesin uji, privilege, dan pemulihan disetujui. Studi media berikutnya bersifat read-only/local sesuai `docs/feasibility/media-browser.md`. Belum ada izin baru untuk memasang service/extension berprivilege, membeli layanan, atau mengubah gate `master`.
 
 ## 4. Fitur MVP yang belum dibuat
 
