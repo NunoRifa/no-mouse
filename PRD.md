@@ -483,9 +483,9 @@ Screenshot dipakai sebagai bukti fungsi, bukan izin menyalin merek, ilustrasi, w
 
 Baseline final adalah blocker rilis. Dokumen ini tidak mengklaim versi OS/API tersebut sudah diteliti atau dukungan store sudah diverifikasi.
 
-### 13.2 Usulan target penerimaan
+### 13.2 Target penerimaan — keputusan dan usulan
 
-Target berikut perlu dikalibrasi lewat prototipe dan disetujui sebelum menjadi komitmen rilis. Tidak ada angka yang merupakan hasil uji saat ini.
+Keputusan pengguna 25 November 2026: target awal pada LAN sehat adalah **p95 input ≤100 ms** (terlihat di PC), **p95 keterlambatan tampilan ≤500 ms** (terlihat di HP), dan **p95 koneksi ulang ≤5 detik** (komputer aktif dan aplikasi siap). Ketiganya disetujui sebagai target pengujian, bukan klaim performa tercapai. Tidak ada hasil pengukuran fitur remote saat ini. Angka lain, termasuk sekitar 5 fps, jumlah sampel, definisi rinci LAN acuan, dan kapasitas multi-monitor, masih merupakan usulan yang perlu dikalibrasi/ditetapkan; jangan menganggap persetujuan tiga target ini menyetujui seluruh tabel.
 
 | Area | Target usulan | Cara ukur |
 |---|---|---|
